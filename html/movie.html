@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+      
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="../css/movie.css">
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+      <title>MovieFAN</title>
+   </head>
+
+   <body>
+
+      <div class="header">
+
+         <div class="logo">
+            <h1>MovieFAN</h1>
+         </div>
+
+         <ul class="main-nav">
+            <li><h2><a href="index.html">Главная</a></h2></li>
+            <li><h2>Коллекции</h2></li>
+         </ul>
+
+         <div class="user-nav">
+            <search class="search">
+               <form method="get" action="/search">
+               <span class="icon"><i class="fa fa-search"></i></span>
+               <input type="search-field" id="search-text" placeholder="Поиск..."/>
+               </form>
+            </search>
+            <a href="ya.ru"><img class="avatar" src="../images/profile-round-1342-svgrepo-com.svg"></a>
+         </div>
+
+      </div>
+
+      <div class="movie-container">
+
+         <div class="movie-poster">
+         <img id="posterImage" src="" alt="Постер фильма">
+         <div id="movieRating">Оценка: <span id="ratingValue">0</span>/10</div>
+         </div>
+
+         <div class="movie-info">
+            <h2 id="movieTitle">Название фильма</h2>
+            <ul id="movieDetails"></ul>
+
+            <div class="movie-crew">
+               <h3>Съемочная группа</h3>
+               <div class="crew-carousel">
+                   <button class="scroll-button left-scroll"><</button>
+                   <ul id="movieCrew" class="crew-list"></ul>
+                   <button class="scroll-button right-scroll">></button>
+               </div>
+           </div>
+         </div>
+
+      </div>
+
+      
+
+      <h2 class="watch-online-title">Смотреть онлайн</h2>
+      <div id="kinobox-container"></div>
+
+      <div class="comments-section">
+         <h3>Отзывы</h3>
+
+         <div class="comment-form">
+            <textarea id="commentText" placeholder="Расскажите свои впечатления"></textarea>
+            <button id="submitComment">Отправить</button>
+         </div>
+
+         <div class="comments-list">  </div>
+      </div>
+
+      <script src="../js/movie.js"></script>
+   </body>
+</html>

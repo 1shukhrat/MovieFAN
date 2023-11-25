@@ -1,0 +1,172 @@
+@import url(https://db.onlinewebfonts.com/c/29e676384bcea6f376417bcfee5c8595?family=ivi+Sans+Regular);
+
+body {
+   background-color: #100e19;
+   font-family: ivi Sans Regular ,Arial,Helvetica,sans-serif;
+   color: white;
+   
+}
+
+a {
+   color: inherit; /* Устанавливает цвет ссылки таким же, как у родительского элемента */
+   text-decoration: none; /* Убирает подчеркивание */
+ }
+ 
+ a:hover {
+   color: inherit; /* Можно изменить цвет при наведении */
+   text-decoration: none; /* Убрать подчеркивание при наведении, если необходимо */
+ }
+
+.header {
+   
+   display: flex;
+   width: 99%;
+   /*position: fixed;*/
+   height: 70px;
+   
+   border-bottom: 1px solid #fff;
+   
+   justify-content: space-between;
+   
+}
+
+.logo > h1 {
+   margin: 12px;
+}
+
+.main-nav {
+   list-style: none;
+   display: flex;
+   text-align: center;
+   padding:  0;
+   margin: 0;
+   
+}
+
+.user-nav {
+   display: flex;
+
+}
+
+.main-nav > li {
+   margin: 0 10px;
+
+}
+
+
+.avatar {
+   height: 40px;
+   margin-top: 10px;
+   margin-right: 12px;
+}
+
+.movies {
+   display: flex;
+   width: 99%;
+}
+   
+ .search {
+   width: 300px;
+   vertical-align: middle;
+   white-space: nowrap;
+   position: relative;
+ }
+
+ .search input {
+   width: 180px;
+  height: 40px;
+  background: #2b303b;
+  border: none;
+  font-size: 10pt;
+  float: left;
+  color: #63717f;
+  padding-left: 90px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin-top: 9px;
+ }
+
+ .search .icon{
+   position:absolute;
+   top: 3px;
+   margin-left: 15px;
+   margin-top: 17px;
+   z-index: 1;
+   color: #4f5b66;
+ }
+
+ #moviesContainer {
+   display: flex;
+   justify-content: center; /* Центрирование карточек */
+   flex-wrap: wrap; /* Перенос строк для карточек */
+   margin-top: 20px; /* Отступ сверху */
+ }
+
+ .movie-card {
+   padding: 10px;
+   margin: 10px;
+   width: 200px;
+   display: inline-block;
+   vertical-align: top;
+   transition: transform 0.3s ease;
+ }
+ 
+ .movie-image {
+   width: 100%;
+   height: auto;
+   border-radius: 10px;
+   
+ }
+
+ .movie-card:hover {
+   transform: scale(1.1);
+ }
+ 
+ .movie-title {
+   font-size: 16px;
+   font-weight: bold;
+ }
+ 
+
+ 
+ #loadingIndicator {
+   text-align: center;
+   padding: 20px;
+ }
+
+
+ .filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  color: white; /* Цвет текста, соответствующий сайту */
+}
+
+.genre-selector, .country-selector {
+  margin-right: 15px;
+}
+
+
+select {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #fff; /* Белая граница */
+  background-color: #100e19; /* Фон, соответствующий сайту */
+  color: white; /* Цвет текста */
+  font-family: ivi Sans Regular, Arial, Helvetica, sans-serif; /* Шрифт сайта */
+}
+
+/* Стили для опций в выпадающем списке */
+select option {
+  background-color: #100e19; /* Фон, соответствующий сайту */
+  color: white; /* Цвет текста */
+}
+
+
+
+ 
+   
+  
+

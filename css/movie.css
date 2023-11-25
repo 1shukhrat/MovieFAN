@@ -1,0 +1,305 @@
+@import url(https://db.onlinewebfonts.com/c/29e676384bcea6f376417bcfee5c8595?family=ivi+Sans+Regular);
+
+body {
+   background-color: #100e19;
+   font-family: ivi Sans Regular ,Arial,Helvetica,sans-serif;
+   color: white;
+   
+}
+
+a {
+  color: inherit; /* Устанавливает цвет ссылки таким же, как у родительского элемента */
+  text-decoration: none; /* Убирает подчеркивание */
+}
+
+a:hover {
+  color: inherit; /* Можно изменить цвет при наведении */
+  text-decoration: none; /* Убрать подчеркивание при наведении, если необходимо */
+}
+
+.header {
+   
+   display: flex;
+   width: 99%;
+
+   height: 70px;
+   
+   border-bottom: 1px solid #fff;
+   
+   justify-content: space-between;
+   
+}
+
+.logo > h1 {
+   margin: 12px;
+}
+
+.main-nav {
+   list-style: none;
+   display: flex;
+   text-align: center;
+   padding:  0;
+   margin: 0;
+   
+}
+
+.user-nav {
+   display: flex;
+
+}
+
+.main-nav > li {
+   margin: 0 10px;
+
+}
+
+
+.avatar {
+   height: 40px;
+   margin-top: 10px;
+   margin-right: 12px;
+}
+   
+ .search {
+   width: 300px;
+   vertical-align: middle;
+   white-space: nowrap;
+   position: relative;
+ }
+
+ .search input {
+   width: 180px;
+  height: 40px;
+  background: #2b303b;
+  border: none;
+  font-size: 10pt;
+  float: left;
+  color: #63717f;
+  padding-left: 90px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin-top: 9px;
+ }
+
+ .search .icon{
+   position:absolute;
+   top: 3px;
+   margin-left: 15px;
+   margin-top: 17px;
+   z-index: 1;
+   color: #4f5b66;
+ }
+
+ .movie-container {
+   display: flex;
+   margin-top: 20px;
+   align-items: flex-start;
+ }
+ 
+ .movie-poster {
+   flex-basis: 30%;
+   padding: 10px;
+   text-align: center;
+ }
+ 
+ .movie-poster img {
+   width: 100%;
+   height: auto;
+   max-width: 300px; 
+ }
+ 
+ #rateButton {
+   display: block;
+   margin-top: 20px;
+   padding: 10px 20px;
+   background-color: #4CAF50;
+   color: white;
+   border: none;
+   cursor: pointer;
+ }
+ 
+ #rateButton:hover {
+   background-color: #45a049;
+ }
+ 
+ .movie-info {
+   flex-basis: 70%;
+   padding: 20px;
+   padding-right: 200px;
+   font-size: 18px;
+ }
+ 
+ .movie-info h2 {
+   margin-top: 0;
+   font-size: 24px;
+ }
+ 
+ #movieDetails {
+   list-style-type: none;
+   padding: 0;
+ }
+ 
+ #movieDetails li {
+   margin-bottom: 10px;
+ }
+
+ #kinobox-container {
+   display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 100%; 
+  width: 100%; 
+ }
+
+ .watch-online-title {
+   text-align: center; 
+   margin-top: 20px; 
+   margin-bottom: 30px; 
+ }
+ 
+ #movieRating {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 24px;
+}
+
+.comments-section {
+  text-align: center; /* Центрирование всего содержимого секции комментариев */
+  margin: 20px auto;
+  width: 1000px;
+}
+
+.comments-section h3 {
+  margin-bottom: 20px; /* Отступ для заголовка */
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центрирование содержимого по горизонтали */
+  
+}
+
+.comment-form textarea {
+  width: 100%; /* Ширина, равная ширине плеера */
+  height: 100px;
+  padding: 10px;
+  background-color: #000; /* Черный фон */
+  color: #fff; /* Белый текст */
+  border: 1px solid #555;
+  border-radius: 4px;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.comment-form textarea::placeholder {
+  color: #bbb; /* Цвет для текста подсказки */
+}
+
+.comment-form button {
+  padding: 10px 20px;
+  margin-top: 10px; /* Отступ сверху */
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+} 
+
+.comment-form button:hover {
+  background-color: #45a049; /* Темно-зеленый фон при наведении */
+}
+
+
+.comments-list {
+  border-top: 1px solid #ccc;
+  margin-top: 20px;
+}
+
+.comment {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.crew-carousel {
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  width: 1000px;
+}
+
+.crew-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.crew-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  margin: 0 10px;
+  flex-wrap: nowrap;
+  width: max-content;
+}
+
+.crew-list::-webkit-scrollbar {
+  display: none;
+}
+
+.crew-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 5dvb;
+  width: 120px;
+  transition: transform 0.3s ease;
+  
+}
+
+.crew-member:hover {
+  transform: scale(1.1); /* Увеличивает размер карточки на 10% */
+}
+
+.crew-photo {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.crew-name {
+  margin-bottom: 5px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.crew-role {
+  font-size: 14px;
+  color: #ccc;
+  text-align: center;
+}
+
+.scroll-button {
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
