@@ -63,10 +63,23 @@ document.addEventListener("DOMContentLoaded", function() {
   currentPage = 0;
   isLastPage = false;
   fetchMovies();
+  document.getElementById('resetFiltersButton').style.display = 'block'
 });
 
 document.getElementById('countrySelect').addEventListener('change', function() {
   selectedCountry = this.value;
+  currentPage = 0;
+  isLastPage = false;
+  fetchMovies();
+  document.getElementById('resetFiltersButton').style.display = 'block'
+});
+
+document.getElementById('resetFiltersButton').addEventListener('click', function() {
+  document.getElementById('genreSelect').value = '';
+  document.getElementById('countrySelect').value = '';
+  selectedGenre = '';
+  selectedCountry = '';
+  this.style.display = 'none';
   currentPage = 0;
   isLastPage = false;
   fetchMovies();
@@ -101,6 +114,7 @@ document.getElementById('countrySelect').addEventListener('change', function() {
      fetchCountries();
    }
  });
+
  
  function fetchGenres() {
    fetch('http://localhost:8080/api/v1/genres') // Замените URL_API_ЖАНРОВ на ваш URL
