@@ -40,6 +40,7 @@ a {
    text-align: center;
    padding:  0;
    margin: 0;
+
    
 }
 
@@ -166,16 +167,17 @@ select option {
 
 #resetFiltersButton {
   padding: 10px 15px;
-  background-color: #4CAF50; /* Пример цвета кнопки */
+  background-color: #100e19; /* Пример цвета кнопки */
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid #fff; /* Белая граница */
   /* Дополнительные стили, если нужно */
 }
 
 #resetFiltersButton:hover {
-  background-color: #45a049; /* Цвет при наведении */
+  background-color: #db1a1a; /* Цвет при наведении */
 }
 
 

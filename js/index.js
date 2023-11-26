@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
  let isLastPage = false;
  let selectedGenre = '';
  let selectedCountry = '';
+ let selectedYear = [];
  
  function fetchMovies() {
   let url = `http://localhost:8080/api/v1/movies?page=${currentPage}`;
@@ -14,6 +15,11 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   if (selectedCountry) {
     url += `&country=${selectedCountry}`;
+  }
+  if (selectedYear) {
+    for (i = 0; i < selectedYear.length; i++) {
+      url += `&year=${selectedYear[i]}`;
+    }
   }
   fetch(url)
     .then(response => response.json())
@@ -74,11 +80,35 @@ document.getElementById('countrySelect').addEventListener('change', function() {
   document.getElementById('resetFiltersButton').style.display = 'block'
 });
 
+document.getElementById('yearSelect').addEventListener('change', function() {
+  selectedYear = []
+  const reg1 = /\d+-\d+/;
+  if (reg1.test(this.value)) {
+    years = this.value.split("-");
+    for (i = years[0]; i <= years[1]; i++) {
+      selectedYear.push(i);
+    }
+  }
+  else if (this.value === "before-1985") {
+    selectedYear.push(1984);
+  }
+  else {
+    selectedYear.push(this.value);
+  }
+  currentPage = 0;
+  isLastPage = false;
+  fetchMovies();
+  document.getElementById('resetFiltersButton').style.display = 'block'
+});
+
+
 document.getElementById('resetFiltersButton').addEventListener('click', function() {
-  document.getElementById('genreSelect').value = '';
-  document.getElementById('countrySelect').value = '';
+  document.getElementById('genreSelect').value = 'Жанр';
+  document.getElementById('countrySelect').value = 'Страна';
+  document.getElementById('yearSelect').value = 'Год';
   selectedGenre = '';
   selectedCountry = '';
+  selectedYear = [];
   this.style.display = 'none';
   currentPage = 0;
   isLastPage = false;
@@ -102,6 +132,7 @@ document.getElementById('resetFiltersButton').addEventListener('click', function
 
  let genresLoaded = false;
  let countriesLoaded = false;
+ let yearLoaded = false;
  
  document.getElementById('genreSelect').addEventListener('focus', function() {
    if (!genresLoaded) {
@@ -114,6 +145,13 @@ document.getElementById('resetFiltersButton').addEventListener('click', function
      fetchCountries();
    }
  });
+
+ document.getElementById('yearSelect').addEventListener('focus', function() {
+  if (!yearLoaded) {
+    populateYearSelect();
+  }
+});
+
 
  
  function fetchGenres() {
@@ -144,4 +182,25 @@ document.getElementById('resetFiltersButton').addEventListener('click', function
      selectElement.appendChild(option);
    });
  }
+
+ function populateYearSelect() {
+  const yearSelect = document.getElementById('yearSelect');
+ // Очищаем существующие опции
+
+  // Добавление годов с 2015 до 2023
+  for (let year = 2023; year >= 2015; year--) {
+    yearSelect.add(new Option(year, year));
+  }
+
+  // Добавление годов с шагом в 5 лет от 1990 до 2015
+  for (let year = 2015 - 5; year >= 1990; year -= 5) {
+    yearSelect.add(new Option(`${year-5}-${year}`, `${year-5}-${year}`));
+  }
+
+  // Добавление опции для годов до 1990
+  yearSelect.add(new Option('до 1985', 'before-1985'));
+
+  yearLoaded = true;
+}
+
  
