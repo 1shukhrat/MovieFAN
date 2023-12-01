@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
      .then(response => response.json())
      .then(movie => {
        displayMovieDetails(movie);
+       document.title = movie.title;
        document.getElementById('ratingValue').textContent = movie.userRating.toFixed(1);
      })
      .catch(error => console.error('Ошибка:', error));

@@ -145,7 +145,7 @@ a {
   color: white; /* Цвет текста, соответствующий сайту */
 }
 
-.genre-selector, .country-selector {
+.genre-selector, .country-selector, #resetFiltersButton, #applyFiltersButton,  #yearRangeInput, #yearRangeSlider{
   margin-right: 15px;
 }
 
@@ -166,7 +166,7 @@ select option {
 }
 
 #resetFiltersButton {
-  padding: 10px 15px;
+  padding: 8px 12px;
   background-color: #100e19; /* Пример цвета кнопки */
   color: white;
   border: none;
@@ -176,9 +176,65 @@ select option {
   /* Дополнительные стили, если нужно */
 }
 
+#applyFiltersButton {
+  padding: 8px 12px;
+  background-color: #100e19; /* Пример цвета кнопки */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #fff; /* Белая граница */
+  /* Дополнительные стили, если нужно */
+}
+
+#applyFiltersButton:hover {
+  background-color: #1adb44; /* Цвет при наведении */
+}
+
 #resetFiltersButton:hover {
   background-color: #db1a1a; /* Цвет при наведении */
 }
+
+
+#yearRangeInput {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #fff; /* Белая граница */
+  background-color: #100e19; /* Фон, соответствующий сайту */
+  color: white; /* Цвет текста */
+  font-family: ivi Sans Regular, Arial, Helvetica, sans-serif; /* Шрифт сайта */
+  cursor: pointer; /* Курсор при наведении на поле *
+}
+
+#yearRangeInput:focus {
+  outline: none; /* Убрать контур при фокусе */
+}
+
+/* Стили для выпадающего блока с диапазоном годов */
+#yearRangeSlider {
+  width: 200px; /* Ширина ползунка */
+  background-color: #2b303b; /* Фоновый цвет */
+  padding: 8px 12px;
+  border-radius: 5px;
+  display: none; /* Ползунок скрыт по умолчанию */
+  box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.5); /* Тень */
+}
+
+#yearRangeSlider input {
+  width: 80px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  background-color: #2b303b;
+  color: white;
+}
+
+#yearRangeSlider input:focus {
+  outline: none;
+}
+
+
+
 
 
 

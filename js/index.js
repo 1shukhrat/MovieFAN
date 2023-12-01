@@ -1,25 +1,23 @@
 document.addEventListener("DOMContentLoaded", function() {
    fetchMovies();
  });
- 
+var defaultStartYear = 1939;
+var defaultEndYear = 2023;
  let currentPage = 0;
  let isLastPage = false;
  let selectedGenre = '';
  let selectedCountry = '';
- let selectedYear = [];
+ let startYear = defaultStartYear;
+ let endYear = defaultEndYear;
+ 
  
  function fetchMovies() {
-  let url = `http://localhost:8080/api/v1/movies?page=${currentPage}`;
+  let url = `http://localhost:8080/api/v1/movies?page=${currentPage}&startYear=${startYear}&endYear=${endYear}`;
   if (selectedGenre) {
     url += `&genre=${selectedGenre}`;
   }
   if (selectedCountry) {
     url += `&country=${selectedCountry}`;
-  }
-  if (selectedYear) {
-    for (i = 0; i < selectedYear.length; i++) {
-      url += `&year=${selectedYear[i]}`;
-    }
   }
   fetch(url)
     .then(response => response.json())
@@ -58,57 +56,42 @@ document.addEventListener("DOMContentLoaded", function() {
      card.addEventListener('click', function()  {
       window.location.href = `movie.html?id=${this.getAttribute('data-movie-id')}`;
      })
-    
- 
      container.appendChild(card);
    });
  }
 
  document.getElementById('genreSelect').addEventListener('change', function() {
   selectedGenre = this.value;
-  currentPage = 0;
-  isLastPage = false;
-  fetchMovies();
   document.getElementById('resetFiltersButton').style.display = 'block'
+  document.getElementById('applyFiltersButton').style.display = 'block'
 });
 
 document.getElementById('countrySelect').addEventListener('change', function() {
   selectedCountry = this.value;
+  document.getElementById('resetFiltersButton').style.display = 'block'
+  document.getElementById('applyFiltersButton').style.display = 'block'
+});
+
+
+document.getElementById('applyFiltersButton').addEventListener('click', function() {
+  document.getElementById('yearRangeSlider').style.display = 'none'
+  this.style.display = 'none';
   currentPage = 0;
   isLastPage = false;
   fetchMovies();
-  document.getElementById('resetFiltersButton').style.display = 'block'
 });
-
-document.getElementById('yearSelect').addEventListener('change', function() {
-  selectedYear = []
-  const reg1 = /\d+-\d+/;
-  if (reg1.test(this.value)) {
-    years = this.value.split("-");
-    for (i = years[0]; i <= years[1]; i++) {
-      selectedYear.push(i);
-    }
-  }
-  else if (this.value === "before-1985") {
-    selectedYear.push(1984);
-  }
-  else {
-    selectedYear.push(this.value);
-  }
-  currentPage = 0;
-  isLastPage = false;
-  fetchMovies();
-  document.getElementById('resetFiltersButton').style.display = 'block'
-});
-
 
 document.getElementById('resetFiltersButton').addEventListener('click', function() {
   document.getElementById('genreSelect').value = 'Жанр';
   document.getElementById('countrySelect').value = 'Страна';
-  document.getElementById('yearSelect').value = 'Год';
+  document.getElementById('applyFiltersButton').style.display = 'none'
+  document.getElementById('yearRangeSlider').style.display = 'none'
+  startYear = defaultStartYear;
+  endYear = defaultEndYear;
+  $("#yearRangeInput").val(startYear + " - " + endYear);
+  $("#yearRangeSlider").slider("values", [defaultStartYear, defaultEndYear]);
   selectedGenre = '';
   selectedCountry = '';
-  selectedYear = [];
   this.style.display = 'none';
   currentPage = 0;
   isLastPage = false;
@@ -132,7 +115,6 @@ document.getElementById('resetFiltersButton').addEventListener('click', function
 
  let genresLoaded = false;
  let countriesLoaded = false;
- let yearLoaded = false;
  
  document.getElementById('genreSelect').addEventListener('focus', function() {
    if (!genresLoaded) {
@@ -146,11 +128,6 @@ document.getElementById('resetFiltersButton').addEventListener('click', function
    }
  });
 
- document.getElementById('yearSelect').addEventListener('focus', function() {
-  if (!yearLoaded) {
-    populateYearSelect();
-  }
-});
 
 
  
@@ -183,24 +160,37 @@ document.getElementById('resetFiltersButton').addEventListener('click', function
    });
  }
 
- function populateYearSelect() {
-  const yearSelect = document.getElementById('yearSelect');
- // Очищаем существующие опции
 
-  // Добавление годов с 2015 до 2023
-  for (let year = 2023; year >= 2015; year--) {
-    yearSelect.add(new Option(year, year));
-  }
 
-  // Добавление годов с шагом в 5 лет от 1990 до 2015
-  for (let year = 2015 - 5; year >= 1990; year -= 5) {
-    yearSelect.add(new Option(`${year-5}-${year}`, `${year-5}-${year}`));
-  }
+$(function() {
+  $("#yearRangeSlider").hide(); // Скрыть ползунок при загрузке страницы
 
-  // Добавление опции для годов до 1990
-  yearSelect.add(new Option('до 1985', 'before-1985'));
+  $("#yearRangeInput").on('click', function() {
+      $("#yearRangeSlider").toggle(); // Показать или скрыть ползунок при клике на поле выбора года
+      document.getElementById('resetFiltersButton').style.display = 'block'
+      document.getElementById('applyFiltersButton').style.display = 'block'
+  });
 
-  yearLoaded = true;
-}
+  
+
+  $("#yearRangeInput").val(startYear + " - " + endYear);
+
+  $("#yearRangeSlider").slider({
+      range: true,
+      min: defaultStartYear,
+      max: defaultEndYear,
+      values: [defaultStartYear, defaultEndYear],
+      slide: function(event, ui) {
+          $("#yearRangeInput").val(ui.values[0] + " - " + ui.values[1]);
+          startYear = ui.values[0];
+          endYear =  ui.values[1];
+      }
+  });
+});
+
+
+
+
+
 
  

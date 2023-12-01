@@ -4,8 +4,12 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="../css/index.css">
+   <link rel="icon" href="../images/icon.svg" type="image/x-icon">
    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
    <title>MovieFAN</title>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
    <div class="header">
@@ -40,12 +44,9 @@
           <!-- Опции стран будут добавлены здесь -->
         </select>
       </div>
-      <div class="year-selector">
-         <select id="yearSelect">
-          <option value="Год" selected disabled>Год</option>
-           <!-- Опции стран будут добавлены здесь -->
-         </select>
-       </div>
+      <input type="text" id="yearRangeInput" readonly>
+      <div id="yearRangeSlider"></div>
+      <button id="applyFiltersButton" style="display: none;">Применить</button>
       <button id="resetFiltersButton" style="display: none;">Сбросить</button>
     </div>
     
