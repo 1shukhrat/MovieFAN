@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
       search: { 
          kinopoisk: movieId 
       },
-      hide: ['alloha'],
+      hide: ['alloha', 'cdnmovies'],
    }).init();
    };
  }
@@ -104,17 +104,18 @@ function displayMovieStaff(staff) {
     crewContainer.innerHTML = '';
 
     staff.directors.forEach(director => {
-        const directorItem = createCrewMemberListItem(director.fullName, null, "Режиссёр");
+        const directorItem = createCrewMemberListItem(director.id, director.fullName, director.photoUrl, "Режиссёр");
         crewContainer.appendChild(directorItem);
-    });
+        });
 
     staff.actors.forEach(actor => {
-        const actorItem = createCrewMemberListItem(actor.fullName, actor.photoUrl, "Актёр");
+        const actorItem = createCrewMemberListItem(actor.id, actor.fullName, actor.photoUrl, "Актёр");
         crewContainer.appendChild(actorItem);
+        
     });
 }
 
-function createCrewMemberListItem(name, photoUrl, role) {
+function createCrewMemberListItem(id, name, photoUrl, role) {
   const listItem = document.createElement('li');
   listItem.classList.add('crew-member');
 
@@ -134,6 +135,9 @@ function createCrewMemberListItem(name, photoUrl, role) {
   roleElement.classList.add('crew-role');
   listItem.appendChild(roleElement);
 
+  listItem.addEventListener('click', function()  {
+    window.location.href = `staff.html?id=${id}&role=${role}`;
+  })
   return listItem;
 }
 

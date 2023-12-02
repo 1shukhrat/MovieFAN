@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="../css/staff.css">
+   <link rel="icon" href="../images/icon.svg" type="image/x-icon">
+   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+   <title>MovieFAN</title>
+</head>
+<body>
+   <div class="header">
+      <div class="logo">
+         <h1>MovieFAN</h1>
+      </div>
+      <ul class="main-nav">
+         <li><h2><a href="index.html">Главная</a></h2></li>
+         <li><h2>Коллекции</h2></li>
+      </ul>
+      <div class="user-nav">
+         <search class="search">
+            <form method="get" action="/search">
+              <span class="icon"><i class="fa fa-search"></i></span>
+              <input type="search-field" id="search-text" placeholder="Поиск..."/>
+            </form>
+          </search>
+         <a href="ya.ru"><img class="avatar" src="../images/profile-round-1342-svgrepo-com.svg"></a>
+      </div>
+   </div>
+
+   <div class="actor-info">
+      <div class="actor-image">
+         <img class="photo" src="">
+      </div>
+      <div class="actor-details">
+         <h1 class = "name"></h1>
+         <h2 class = "role"></h2>
+      </div>
+   </div>
+   
+   <h1 style="margin-left: 20px;">Участие в проектах</h1>
+   
+   <div id="moviesContainer"></div>
+   <div id="loadingIndicator" style="display: none;">Загрузка...</div>
+
+   <script src="../js/staff.js"></script>
+</body>
+</html>
