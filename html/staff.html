@@ -14,20 +14,55 @@
          <h1>MovieFAN</h1>
       </div>
       <ul class="main-nav">
-         <li><h2><a href="index.html">Главная</a></h2></li>
-         <li><h2>Коллекции</h2></li>
+         <li><h2><a href="index.html">Вернуться на главную</a></h2></li>
       </ul>
       <div class="user-nav">
-         <search class="search">
-            <form method="get" action="/search">
-              <span class="icon"><i class="fa fa-search"></i></span>
-              <input type="search-field" id="search-text" placeholder="Поиск..."/>
-            </form>
-          </search>
-         <a href="ya.ru"><img class="avatar" src="../images/profile-round-1342-svgrepo-com.svg"></a>
+         <a href="#" id="openModalButton"><img class="avatar" src="../images/profile-round-1342-svgrepo-com.svg"></a>
       </div>
    </div>
 
+   <div id="modalBackground" class="modal-background"></div>
+   <!-- Модальное окно -->
+<div id="authModal" class="modal">
+   <div class="modal-content">
+     <span class="close" id="closeModalButton">&times;</span>
+     <h2>Вход</h2>
+     <form id="loginForm">
+       <label for="username">Логин:</label>
+       <input type="text" id="username" name="username" required>
+       <label for="password">Пароль:</label>
+       <input type="password" id="password" name="password" required>
+       <button type="submit">Войти</button>
+     </form>
+     <p>Еще нет аккаунта? <a href="#" id="showRegistration">Зарегистрироваться</a></p>
+   </div>
+ </div>
+ 
+ <!-- Модальное окно регистрации (по аналогии с авторизацией) -->
+ <div id="registrationModal" class="modal">
+   <div class="modal-content">
+     <span class="close" id="closeRegistrationModal">&times;</span>
+     <h2>Регистрация</h2>
+     <form id="registrationForm">
+       <label for="newUsername">Логин:</label>
+       <input type="text" id="newUsername" name="newUsername" required>
+       <label for="newPassword">Пароль:</label>
+       <input type="password" id="newPassword" name="newPassword" required>
+       <div class="tooltip" id="passwordTooltip">Ваш пароль должен содержать 
+         минимум 8 символов, включая цифры и буквы обоих регистров, а также по крайней мере один из специальных символов: [@()$!%*#?&]</div>
+       <button type="submit">Зарегистрироваться</button>
+     </form>
+   </div>
+ </div>
+ <div id="userModal" class="modal">
+   <div class="modal-content">
+     <span class="close" id="closeUserModalButton">&times;</span>
+     <h2>Информация о пользователе</h2>
+     <p id="userInfo"></p>
+     <button id="logoutButton">Выйти</button>
+     <button id="deleteAccountButton">Удалить аккаунт</button>
+   </div>
+ </div>
    <div class="actor-info">
       <div class="actor-image">
          <img class="photo" src="">

@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 
 function fetchStaffDetails() {
-   if (staffRole === "Директор") {
+   if (staffRole === "Режиссёр") {
       urlRole = "/directors";
    }
    else {
@@ -23,10 +23,10 @@ function fetchStaffDetails() {
    url += urlRole;
    url += `/${staffId}`;
    fetch(url).
-   then(respone => respone.json()).
+   then(response => response.json()).
    then(staff => {
       document.title=staff.fullName;
-      document.querySelector(".photo").src = staff.photoUrl;
+      document.querySelector(".photo").src = staff.photoUrl ? staff.photoUrl: '../images/no-poster.gif';
       document.querySelector(".photo").alt = staff.fullName;
       document.querySelector(".name").textContent = staff.fullName;
       document.querySelector(".role").textContent = staffRole;
@@ -86,4 +86,198 @@ function fetchMovies() {
        document.getElementById('loadingIndicator').style.display = 'none';
       }
     }, 100);
+  });
+
+  const openModalButton = document.getElementById('openModalButton');
+  const authModal = document.getElementById('authModal');
+  const modalBackground = document.getElementById('modalBackground');
+  
+  openModalButton.addEventListener('click', () => {
+    if (getCookie('token')) {
+      showUserModal();
+    }
+    else {
+      authModal.style.display = 'block';
+      modalBackground.style.display = 'block';
+      document.body.classList.add('modal-open');
+    }
+  });
+  
+  // Закрытие модального окна при нажатии на крестик
+  const closeModalButton = document.getElementById('closeModalButton');
+  
+  closeModalButton.addEventListener('click', () => {
+    authModal.style.display = 'none';
+    modalBackground.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  });
+  
+  // Открытие модального окна регистрации при нажатии на ссылку "Зарегистрироваться"
+  const showRegistrationLink = document.getElementById('showRegistration');
+  const registrationModal = document.getElementById('registrationModal');
+  
+  showRegistrationLink.addEventListener('click', () => {
+    authModal.style.display = 'none';
+    registrationModal.style.display = 'block';
+    modalBackground.style.display = 'block';
+    document.body.classList.add('modal-open');
+    
+  });
+  
+  // Закрытие модального окна регистрации при нажатии на крестик
+  const closeRegistrationModalButton = document.getElementById('closeRegistrationModal');
+  
+  closeRegistrationModalButton.addEventListener('click', () => {
+    registrationModal.style.display = 'none';
+    modalBackground.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  });
+  
+  // Обработка отправки формы авторизации
+  const loginForm = document.getElementById('loginForm');
+  
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Предотвращаем стандартное действие формы (перезагрузку страницы)
+    var login = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+  
+    var data = {
+       login: login,
+       password: password
+    };
+  
+    fetch("http://localhost:8080/api/v2/auth/signIn", {
+       method: "POST",
+       headers: {
+          "Content-Type": "application/json"
+       },
+       body: JSON.stringify(data)
+    })
+    .then(function(response) {
+       if (response.ok) {
+        return response.json();
+        
+       } else {
+          alert("Неправильный логин или пароль");
+       }
+    })
+    .then(dataResponse => {
+        setCookie('userId', dataResponse.id);
+         setCookie('username', dataResponse.username);
+         setCookie('token', dataResponse.token);
+        authModal.style.display = 'none';
+        modalBackground.style.display = 'none';
+        document.body.classList.remove('modal-open');
+        window.location.reload();
+    })
+    .catch(function(error) {
+       console.error("Ошибка:", error);
+    });
+  });
+  
+  // Обработка отправки формы регистрации (по аналогии с формой авторизации)
+  const registrationForm = document.getElementById('registrationForm');
+  
+  registrationForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+  
+    var login = document.getElementById("newUsername").value;
+    var password = document.getElementById("newPassword").value;
+  
+    var data = {
+       login: login,
+       password: password
+    };
+  
+    fetch("http://localhost:8080/api/v2/auth/signUp", {
+       method: "POST",
+       headers: {
+          "Content-Type": "application/json"
+       },
+       body: JSON.stringify(data)
+    })
+    .then(function(response) {
+       if (response.ok) {
+        registrationModal.style.display = 'none';
+        modalBackground.style.display = 'none';
+        document.body.classList.remove('modal-open');
+       } else  {
+          alert(response.json().message);
+       }
+    })
+    .catch(function(error) {
+       console.error("Ошибка:", error);
+    });
+    // Добавьте код для отправки данных на сервер и обработки регистрации
+  });
+  
+  document.getElementById('logoutButton').addEventListener('click', () => {
+    setCookie('userId', '', -1);
+    setCookie('username', '', -1);
+    setCookie('token', '', -1);
+    userModal.style.display = 'none';
+    modalBackground.style.display = 'none';
+    document.body.classList.remove('modal-open');
+    authModal.style.display = 'block';
+    modalBackground.style.display = 'block';
+    document.body.classList.add('modal-open');
+    window.location.reload();
+  
+  });
+  
+  function setCookie(name, value) {
+    var expires = "";
+    var date = new Date();
+    date.setTime(date.getTime() + (24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/; SameSite=Strict";
+  }
+  
+  function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+      var c = ca[i];
+      while (c.charAt(0)==' ') c = c.substring(1,c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+  }
+  
+  function showUserModal() {
+    var modalContent = document.querySelector("#userModal").querySelector(".modal-content");
+    var userInfo = modalContent.querySelector('#userInfo');
+    modalContent.querySelector("h2").textContent = `Наслаждайтесь просмотром,  ${getCookie('username')}!`;
+    userInfo.textContent = `Вы успешно авторизованы`;
+    userModal.style.display = 'block';
+    modalBackground.style.display = 'block';
+    document.body.classList.add('modal-open');
+  }
+  
+  const closeUserModalButton = document.getElementById('closeUserModalButton');
+  
+  closeUserModalButton.addEventListener('click', () => {
+    userModal.style.display = 'none';
+    modalBackground.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  });
+
+  document.getElementById('deleteAccountButton').addEventListener('click', () => {
+    fetch(`http://localhost:8080/api/v2/users/${getCookie("userId")}`, {
+      method : "DELETE",
+      headers: {
+        "Authorization": `Bearer ${getCookie("token")}` 
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        setCookie('userId', '', -1);
+        setCookie('username', '', -1);
+        setCookie('token', '', -1);
+        userModal.style.display = 'none';
+        modalBackground.style.display = 'none';
+        document.body.classList.remove('modal-open');
+        window.location.reload();
+      }
+    })
   });

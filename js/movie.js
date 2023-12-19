@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
    insertKinoboxPlayer(movieId);
    fetchMovieStaff(movieId);
 
+   checkAndDisplayRating();
+
    const crewList = document.getElementById('movieCrew');
     const leftScrollButton = document.querySelector('.left-scroll');
     const rightScrollButton = document.querySelector('.right-scroll');
@@ -59,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
    const kinoboxPlayer = document.createElement('div');
    kinoboxPlayer.className = 'kinobox_player';
    kinoboxPlayer.style.width = '1000px';
+   kinoboxPlayer.style.zIndex = '0'
    kinoboxContainer.appendChild(kinoboxPlayer);
  
    const kinoboxScript = document.createElement('script');
@@ -76,18 +79,51 @@ document.addEventListener("DOMContentLoaded", function() {
  }
 
  document.getElementById('submitComment').addEventListener('click', () => {
-  const commentText = document.getElementById('commentText').value;
-  if (commentText) {
-    const comment = document.createElement('div');
-    comment.className = 'comment';
-    comment.textContent = commentText;
-    document.querySelector('.comments-list').appendChild(comment);
-
-    // Очистить текстовое поле
-    document.getElementById('commentText').value = '';
-
-    // Здесь можно добавить отправку комментария на сервер
+  const token = getCookie('token');
+  if (!token) {
+    // Показываем модальное окно авторизации
+    authModal.style.display = 'block';
+    modalBackground.style.display = 'block';
+    document.body.classList.add('modal-open');
+    return;
   }
+
+  const commentText = document.getElementById('commentText').value;
+  const movieId = new URLSearchParams(window.location.search).get('id');
+  const userId = getCookie('userId');
+  const userLogin = getCookie('username');
+
+  const requestBody = {
+    text: commentText,
+    userInfoDTO: {
+      id: userId,
+      login: userLogin
+    },
+    movieId: movieId
+  };
+
+  fetch('http://localhost:8080/api/v2/reviews/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(requestBody)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Ошибка при отправке отзыва');
+    }
+    return response.json();
+  })
+  .then(() => {
+    // Повторный запрос всех отзывов после успешного добавления
+    currentPage = 0;
+    isLastPage = false;
+    fetchReviews(movieId, currentPage);
+    document.getElementById('commentText').value = '';
+  })
+  .catch(error => console.error('Ошибка:', error));
 });
 
 function fetchMovieStaff(movieId) {
@@ -140,6 +176,518 @@ function createCrewMemberListItem(id, name, photoUrl, role) {
   })
   return listItem;
 }
+
+
+
+let currentPage = 0;
+let isLastPage = false;
+
+function fetchReviews(movieId, page) {
+  if (isLastPage) return;
+
+  fetch(`http://localhost:8080/api/v2/reviews?movieId=${movieId}&page=${page}`)
+    .then(response => response.json())
+    .then(reviews => {
+      if (reviews.length === 0) {
+        isLastPage = true;
+        return;
+      }
+      displayReviews(reviews);
+      currentPage++; // Увеличиваем номер страницы для следующего запроса
+    })
+    .catch(error => console.error('Ошибка при загрузке отзывов:', error));
+}
+
+function displayReviews(reviews) {
+  const reviewsContainer = document.querySelector('.comments-list');
+  const currentUserId = getCookie('userId');
+
+  reviewsContainer.innerHTML = '';
+
+  reviews.forEach(review => {
+    const reviewElement = document.createElement('div');
+    reviewElement.className = 'review';
+
+    const reviewAuthor = document.createElement('div');
+    reviewAuthor.className = 'review-author';
+    reviewAuthor.textContent = `${review.user.login}`;
+
+    const reviewText = document.createElement('div');
+    reviewText.className = 'review-text';
+    reviewText.textContent = review.text;
+
+    reviewElement.appendChild(reviewAuthor);
+    reviewElement.appendChild(reviewText);
+
+    if (review.user.id.toString() === currentUserId) {
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Удалить';
+      deleteButton.onclick = () => deleteReview(review.id, reviewElement);
+      reviewElement.appendChild(deleteButton);
+    }
+
+    reviewsContainer.appendChild(reviewElement);
+  });
+}
+
+
+function deleteReview(reviewId, reviewElement) {
+  const token = getCookie('token'); // Получение token из cookie
+
+  if (!token) {
+    console.error('Токен не найден');
+    return;
+  }
+
+  reviewElement.style.display = 'none';
+
+  fetch(`http://localhost:8080/api/v2/reviews/${reviewId}/delete`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      currentPage = 0;
+      isLastPage = false;
+      const movieId = new URLSearchParams(window.location.search).get('id');
+      fetchReviews(movieId, currentPage);
+
+      // Повторный запрос всех отзывов или удаление элемента отзыва из DOM
+    } else {
+      console.error('Ошибка при удалении отзыва');
+      reviewElement.style.display = ' ';
+    }
+  })
+  .catch(error => console.error('Ошибка:', error));
+  reviewElement.style.display = ' ';
+}
+
+
+function isInViewport(element) {
+  const rect = element.getBoundingClientRect();
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+}
+
+let reviewsLoaded = false;
+
+window.addEventListener('scroll', () => {
+  const commentsList = document.querySelector('.comments-list');
+  if (isInViewport(commentsList) && !isLastPage) {
+    const movieId = new URLSearchParams(window.location.search).get('id');
+    fetchReviews(movieId, currentPage);
+  }
+});
+
+const openModalButton = document.getElementById('openModalButton');
+const authModal = document.getElementById('authModal');
+const modalBackground = document.getElementById('modalBackground');
+
+openModalButton.addEventListener('click', () => {
+  if (getCookie('token')) {
+    showUserModal();
+  }
+  else {
+    authModal.style.display = 'block';
+    modalBackground.style.display = 'block';
+    document.body.classList.add('modal-open');
+  }
+});
+
+// Закрытие модального окна при нажатии на крестик
+const closeModalButton = document.getElementById('closeModalButton');
+
+closeModalButton.addEventListener('click', () => {
+  authModal.style.display = 'none';
+  modalBackground.style.display = 'none';
+  document.body.classList.remove('modal-open');
+});
+
+// Открытие модального окна регистрации при нажатии на ссылку "Зарегистрироваться"
+const showRegistrationLink = document.getElementById('showRegistration');
+const registrationModal = document.getElementById('registrationModal');
+
+showRegistrationLink.addEventListener('click', () => {
+  authModal.style.display = 'none';
+  registrationModal.style.display = 'block';
+  modalBackground.style.display = 'block';
+  document.body.classList.add('modal-open');
+  
+});
+
+// Закрытие модального окна регистрации при нажатии на крестик
+const closeRegistrationModalButton = document.getElementById('closeRegistrationModal');
+
+closeRegistrationModalButton.addEventListener('click', () => {
+  registrationModal.style.display = 'none';
+  modalBackground.style.display = 'none';
+  document.body.classList.remove('modal-open');
+});
+
+// Обработка отправки формы авторизации
+const loginForm = document.getElementById('loginForm');
+
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault(); // Предотвращаем стандартное действие формы (перезагрузку страницы)
+  var login = document.getElementById("username").value;
+  var password = document.getElementById("password").value;
+
+  var data = {
+     login: login,
+     password: password
+  };
+
+  fetch("http://localhost:8080/api/v2/auth/signIn", {
+     method: "POST",
+     headers: {
+        "Content-Type": "application/json"
+     },
+     body: JSON.stringify(data)
+  })
+  .then(function(response) {
+     if (response.ok) {
+      return response.json();
+      
+     } else {
+        alert("Неправильный логин или пароль");
+     }
+  })
+  .then(dataResponse => {
+      setCookie('userId', dataResponse.id);
+       setCookie('username', dataResponse.username);
+       setCookie('token', dataResponse.token);
+      authModal.style.display = 'none';
+      modalBackground.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      window.location.reload();
+  })
+  .catch(function(error) {
+     console.error("Ошибка:", error);
+  });
+});
+
+// Обработка отправки формы регистрации (по аналогии с формой авторизации)
+const registrationForm = document.getElementById('registrationForm');
+
+registrationForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  var login = document.getElementById("newUsername").value;
+  var password = document.getElementById("newPassword").value;
+
+  var data = {
+     login: login,
+     password: password
+  };
+
+  fetch("http://localhost:8080/api/v2/auth/signUp", {
+     method: "POST",
+     headers: {
+        "Content-Type": "application/json"
+     },
+     body: JSON.stringify(data)
+  })
+  .then(function(response) {
+     if (response.ok) {
+      registrationModal.style.display = 'none';
+      modalBackground.style.display = 'none';
+      document.body.classList.remove('modal-open');
+     } else  {
+        alert(response.json().message);
+     }
+  })
+  .catch(function(error) {
+     console.error("Ошибка:", error);
+  });
+  // Добавьте код для отправки данных на сервер и обработки регистрации
+});
+
+document.getElementById('logoutButton').addEventListener('click', () => {
+  setCookie('userId', '', -1);
+  setCookie('username', '', -1);
+  setCookie('token', '', -1);
+  userModal.style.display = 'none';
+  modalBackground.style.display = 'none';
+  document.body.classList.remove('modal-open');
+  window.location.reload();
+});
+
+document.getElementById('deleteAccountButton').addEventListener('click', () => {
+  fetch(`http://localhost:8080/api/v2/users/${getCookie("userId")}`, {
+    method : "DELETE",
+    headers: {
+      "Authorization": `Bearer ${getCookie("token")}` 
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      setCookie('userId', '', -1);
+      setCookie('username', '', -1);
+      setCookie('token', '', -1);
+      userModal.style.display = 'none';
+      modalBackground.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      window.location.reload();
+    }
+  })
+});
+
+function setCookie(name, value) {
+  var expires = "";
+  var date = new Date();
+  date.setTime(date.getTime() + (24 * 60 * 60 * 1000));
+  expires = "; expires=" + date.toUTCString();
+  document.cookie = name + "=" + (value || "")  + expires + "; path=/; SameSite=Strict";
+}
+
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0;i < ca.length;i++) {
+    var c = ca[i];
+    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+  }
+  return null;
+}
+
+function showUserModal() {
+  var modalContent = document.querySelector("#userModal").querySelector(".modal-content");
+  var userInfo = modalContent.querySelector('#userInfo');
+  modalContent.querySelector("h2").textContent = `Наслаждайтесь просмотром,  ${getCookie('username')}!`;
+  userInfo.textContent = `Вы успешно авторизованы`;
+  userModal.style.display = 'block';
+  modalBackground.style.display = 'block';
+  document.body.classList.add('modal-open');
+}
+
+const closeUserModalButton = document.getElementById('closeUserModalButton');
+
+closeUserModalButton.addEventListener('click', () => {
+  userModal.style.display = 'none';
+  modalBackground.style.display = 'none';
+  document.body.classList.remove('modal-open');
+});
+
+function checkAndDisplayRating() {
+  const token = getCookie('token');
+  if (!token) {
+    displayRatingButton();
+    return;
+  }
+
+  const movieId = new URLSearchParams(window.location.search).get('id');
+  const userId = getCookie('userId');
+
+  fetch(`http://localhost:8080/api/v2/ratings/get?movieId=${movieId}&userId=${userId}`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+    .then(response => {
+      if (!response.ok && response.status === 404) {
+        displayRatingButton(); // Показать кнопку для оценки
+      } else {
+        return response.json();
+      }
+    })
+    .then(data => {
+      if (data) {
+        displayUserRating(data.value);
+        displayDeleteRatingButton(data.id);
+         // Показать оценку пользователя
+      }
+    })
+    .catch(error => console.error('Ошибка:', error));
+}
+
+function displayRatingButton() {
+  const ratingContainer = document.getElementById('ratingContainer');
+  const ratingButton = document.createElement('button');
+  ratingButton.textContent = 'Оценить';
+  ratingButton.onclick = () => {
+    const token = getCookie('token');
+    if (!token) {
+      // Показать модальное окно авторизации
+      authModal.style.display = 'block';
+      modalBackground.style.display = 'block';
+      document.body.classList.add('modal-open');
+    } else {
+      // Показать селектор для оценки
+      displayRangeSelector();
+    }
+  } 
+  ratingContainer.appendChild(ratingButton);
+}
+
+function displayDeleteRatingButton(ratingId) {
+  const ratingContainer = document.getElementById('ratingContainer');
+  const ratingDeleteButton = document.createElement('button');
+  ratingDeleteButton.style.backgroundColor = '#db1a1a';
+  ratingDeleteButton.textContent = 'Удалить';
+  ratingDeleteButton.onclick = () => {
+    fetch(`http://localhost:8080/api/v2/ratings/${ratingId}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getCookie("token")}`
+      },
+    })
+      .then(response => {
+        if (response.ok) {
+           window.location.reload();
+        }
+      })
+      .catch(error => console.error('Ошибка:', error));
+  }
+  ratingContainer.appendChild(ratingDeleteButton);
+} 
+
+
+function displayUserRating(value) {
+  const userRating = document.querySelector('#userRating');
+  userRating.textContent = `Ваша оценка: ${value}`;
+}
+
+
+function displayRangeSelector() {
+  const ratingContainer = document.getElementById('ratingContainer');
+  ratingContainer.innerHTML = '';
+
+  const rangeInput = document.createElement('input');
+  rangeInput.type = 'range';
+  rangeInput.min = '0';
+  rangeInput.max = '10';
+  rangeInput.value = '5'; // Начальное значение
+
+  const valueDisplay = document.createElement('span'); // Элемент для отображения значения
+  valueDisplay.textContent = `${rangeInput.value}`;
+  valueDisplay.id = 'rangeValueDisplay'; // Добавляем ID для удобства
+
+  // Обновление отображаемого значения при изменении ползунка
+  rangeInput.addEventListener('input', function() {
+    valueDisplay.textContent = `${this.value}`;
+  });
+
+  ratingContainer.appendChild(rangeInput);
+  ratingContainer.appendChild(valueDisplay); // До
+
+  const submitButton = document.createElement('button');
+  submitButton.textContent = 'Оценить';
+  submitButton.onclick = () => submitRating(rangeInput.value);
+  ratingContainer.appendChild(submitButton);
+}
+
+function submitRating(value) {
+  const token = getCookie('token');
+  const movieId = new URLSearchParams(window.location.search).get('id');
+  const userId = getCookie('userId');
+
+  fetch('http://localhost:8080/api/v2/ratings/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      value: value,
+      movieId: movieId,
+      userId: userId
+    })
+  })
+  .then(response => {
+    if (response.ok) {
+      console.log('Оценка добавлена');
+      window.location.reload();
+      // Обновить отображение оценки
+    } else {
+      console.error('Ошибка при добавлении оценки');
+    }
+  })
+  .catch(error => console.error('Ошибка:', error));
+}
+
+
+var passwordInput = document.getElementById('newPassword');
+var passwordTooltip = document.getElementById('passwordTooltip');
+
+  passwordInput.addEventListener('mouseover', function() {
+    passwordTooltip.classList.add('show-tooltip');
+  });
+
+  passwordInput.addEventListener('mouseout', function() {
+    passwordTooltip.classList.remove('show-tooltip');
+  });
+
+  const collectionSelect = document.getElementById('collectionSelect');
+  if (!getCookie("token")) {
+    collectionSelect.style.display = 'none';
+  }
+
+  collectionSelect.addEventListener('focus', function() {
+      loadCollections();
+  });
+  
+  function loadCollections() {
+    const token = getCookie('token');
+    if (!token) {
+      document.getElementById('collectionContainer').style.display = 'none';
+      return;
+    }
+    
+    const userId = getCookie('userId');
+    const movieId = new URLSearchParams(window.location.search).get('id');
+    
+    fetch(`http://localhost:8080/api/v2/collections/free?userId=${userId}&movieId=${movieId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        collectionSelect.innerHTML = '<option value="">Добавить в коллекцию</option>';
+        data.forEach(collection => {
+          const option = document.createElement('option');
+          option.value = collection.id;
+          option.textContent = collection.name;
+          collectionSelect.appendChild(option);
+        });
+      })
+      .catch(error => console.error('Ошибка:', error));
+  }
+
+  document.getElementById('collectionSelect').addEventListener('change', function() {
+    const collectionId = this.value;
+    if (!collectionId) return;
+  
+    const movieId = new URLSearchParams(window.location.search).get('id');
+    const token = getCookie('token');
+  
+    fetch(`http://localhost:8080/api/v2/collections/${collectionId}/addMovie?movieId=${movieId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        loadCollections(); // Перезагрузить список после успешного добавления
+      } else {
+        console.error('Ошибка при добавлении в коллекцию');
+      }
+    })
+    .catch(error => console.error('Ошибка:', error));
+  });
+
 
 
 

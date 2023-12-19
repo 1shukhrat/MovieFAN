@@ -150,6 +150,7 @@ a:hover {
   align-items: center; 
   height: 100%; 
   width: 100%; 
+  z-index: 0;
  }
 
  .watch-online-title {
@@ -158,7 +159,7 @@ a:hover {
    margin-bottom: 30px; 
  }
  
- #movieRating {
+ #movieRating, #userRating {
   text-align: center;
   margin-top: 10px;
   font-size: 24px;
@@ -293,11 +294,245 @@ a:hover {
 }
 
 
+.modal-background {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1; /* Отображается выше контента */
+}
+
+.modal-content {
+  background-color: #100e19;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
 
 
 
+/* Скрыть прокрутку фона, когда модальное окно открыто */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Стили для модального окна */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #100e19;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  
+}
+
+/* Заголовок модального окна */
+.modal h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #fff; /* Цвет текста заголовка */
+}
+
+/* Закрыть кнопку */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #fff; /* Цвет крестика */
+  cursor: pointer;
+}
+
+/* Стили для формы */
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Стили для полей ввода */
+.modal input[type="text"],
+.modal input[type="password"] {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc; /* Цвет границы полей ввода */
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+.tooltip {
+  visibility: hidden;
+  width: 200px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -100px; /* Половина ширины элемента */
+  font-size: 12px;
+}
+
+/* Стили для отображения подсказки */
+.show-tooltip {
+  visibility: visible;
+}
 
 
+/* Стили для кнопок */
+.modal button {
+  padding: 10px 20px;
+  background-color: #007bff; /* Цвет фона кнопок */
+  color: #fff; /* Цвет текста кнопок */
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+.comments-list {
+  text-align: left;
+}
+
+
+.review {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.review-author {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 5px; /* Отступ между автором и текстом отзыва */
+}
+
+.review-text {
+  text-align: left;
+  margin-bottom: 10px; /* Отступ между текстом отзыва и кнопкой удаления */
+}
+
+.review button {
+  padding: 5px 10px;
+  background-color: #db1a1a; /* Красный фон */
+  color: white; /* Белый текст */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.review button:hover {
+  background-color: #b31414; /* Темно-красный фон при наведении */
+}
+
+.movie-poster {
+  text-align: center; /* Выравнивание содержимого по центру */
+  margin-bottom: 10px; /* Отступ снизу, если нужен */
+}
+
+#movieRating, #userRating {
+  margin-top: 10px; /* Отступ сверху от изображения */
+}
+
+
+#ratingContainer button {
+  display: block; /* Блочный элемент */
+  margin: 10px auto; /* Отступ и автоматическое выравнивание по центру */
+  padding: 10px 0; /* Отступы сверху и снизу */
+  background-color: #4CAF50; /* Зеленый фон */
+  color: white; /* Белый текст */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 210px; /* Автоматическая ширина */
+}
+
+#ratingContainer button:hover {
+  background-color: #45a049; /* Темно-зеленый фон при наведении */
+}
+
+#ratingContainer input {
+  -webkit-appearance: none; /* Убираем стандартный вид для Webkit-браузеров */
+  appearance: none;
+  width: 210px; /* Ширина слайдера */
+  height: 10px; /* Высота ползунка */
+  background: #2b303b; /* Цвет фона ползунка */
+  outline: none; /* Убираем контур при фокусе */
+  opacity: 0.7; /* Прозрачность ползунка */
+  -webkit-transition: .2s; /* Анимация при наведении */
+  transition: opacity .2s;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  
+}
+
+#ratingContainer input::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Убираем стандартный вид для Webkit-браузеров */
+  appearance: none;
+  width: 25px; /* Ширина ползунка */
+  height: 25px; /* Высота ползунка */
+  background: #4CAF50; /* Цвет ползунка */
+  cursor: pointer; /* Вид курсора */
+  border-radius: 50%; /* Скругляем углы */
+}
+
+#ratingContainer input::-moz-range-thumb {
+  width: 25px; /* Ширина ползунка */
+  height: 25px; /* Высота ползунка */
+  background: #4CAF50; /* Цвет ползунка */
+  cursor: pointer; /* Вид курсора */
+  border-radius: 50%; /* Скругляем углы */
+}
+
+#rangeValueDisplay {
+  margin-left: 20px;
+  font-size: 20px;
+  color: #fff; /* Цвет текста */
+}
+
+
+#collectionContainer {
+  text-align: center; /* Выравнивание по центру */
+  margin-top: 10px; /* Отступ сверху */
+}
+
+#collectionSelect {
+  padding: 10px; /* Внутренний отступ */
+  background-color: #2b303b; /* Темно-серый фон */
+  color: white; /* Белый текст */
+  border: 1px solid #555; /* Темно-серая граница */
+  border-radius: 5px; /* Скругление углов */
+  font-size: 16px; /* Размер шрифта */
+  cursor: pointer; /* Вид курсора */
+  outline: none; /* Убираем стандартный контур */
+}
+
+#collectionSelect:hover {
+  background-color: #3c4452; /* Немного светлее при наведении */
+}
+
+#collectionSelect:focus {
+  background-color: #4f5b66; /* Светло-серый фон при фокусе */
+}
+
+#collectionSelect option {
+  background-color: #100e19; /* Фиолетовый фон для опций */
+  color: white; /* Белый текст */
+  padding: 5px; /* Внутренний отступ */
+}
 
 
 

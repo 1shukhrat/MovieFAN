@@ -104,6 +104,26 @@ a {
    margin-top: 20px; /* Отступ сверху */
  }
 
+ #collectionContainer {
+  display: flex;
+  justify-content: left; /* Центрирование карточек */
+  flex-wrap: wrap; /* Перенос строк для карточек */
+  margin-top: 20px; /* Отступ сверху */
+  flex-direction: column;
+}
+
+.collection h2, .collection p {
+  margin-left: 20px;
+}
+
+.collection {
+  display: block; /* Элементы коллекции будут отображаться на новой строке */
+  margin-bottom: 20px; /* Добавить немного пространства между коллекциями */
+  width: 90%; /* Задать ширину коллекции, например, 90% от ширины родителя */
+  /* Другие стили, если необходимо */
+}
+
+
  .movie-card {
    padding: 10px;
    margin: 10px;
@@ -235,7 +255,185 @@ select option {
 
 
 
+.modal-background {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1; /* Отображается выше контента */
+}
 
+.modal-content {
+  background-color: #100e19;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+
+
+/* Скрыть прокрутку фона, когда модальное окно открыто */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Стили для модального окна */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #100e19;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  
+}
+
+/* Заголовок модального окна */
+.modal h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #fff; /* Цвет текста заголовка */
+}
+
+/* Закрыть кнопку */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #fff; /* Цвет крестика */
+  cursor: pointer;
+}
+
+/* Стили для формы */
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Стили для полей ввода */
+.modal input[type="text"],
+.modal input[type="password"] {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc; /* Цвет границы полей ввода */
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+/* Стили для кнопок */
+.modal button {
+  padding: 10px 20px;
+  background-color: #007bff; /* Цвет фона кнопок */
+  color: #fff; /* Цвет текста кнопок */
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+.tooltip {
+  visibility: hidden;
+  width: 200px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -100px; /* Половина ширины элемента */
+  font-size: 12px;
+}
+
+/* Стили для отображения подсказки */
+.show-tooltip {
+  visibility: visible;
+}
+
+
+.add-collection-btn {
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Цвет фона кнопки */
+  color: white; /* Цвет текста */
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.add-collection-btn:hover {
+  background-color: #13b63b; /* Цвет при наведении */
+}
+
+.modal-content textarea {
+  width: auto;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  resize: vertical; /* Позволяет пользователю изменять размер текстового поля */
+}
+
+.delete-collection-btn {
+  padding: 10px 20px;
+  background-color: #db1a1a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  float: right; /* Для размещения кнопки справа */
+  margin-left: 10px;
+}
+
+.edit-collection-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  float: right; /* Для размещения кнопки справа */
+}
+
+
+.delete-collection-btn:hover {
+  background-color: #a81010;
+}
+
+
+.delete-movie-btn {
+  padding: 10px 15px;
+  background-color: #db1a1a; /* Красный цвет фона для кнопки удаления */
+  color: white; /* Белый цвет текста */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px; /* Меньший размер шрифта */
+  margin-top: 5px;
+  margin-left: 10px ; /* Отступ сверху */
+  display: block; /* Занимает всю ширину родителя */
+}
+
+.delete-movie-btn:hover {
+  background-color: #a81010; /* Темно-красный цвет фона при наведении */
+  transform: none; /* Отмена увеличения размера */
+}
 
 
 
