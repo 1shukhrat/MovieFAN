@@ -90,15 +90,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const commentText = document.getElementById('commentText').value;
   const movieId = new URLSearchParams(window.location.search).get('id');
-  const userId = getCookie('userId');
-  const userLogin = getCookie('username');
+
 
   const requestBody = {
     text: commentText,
-    userInfoDTO: {
-      id: userId,
-      login: userLogin
-    },
     movieId: movieId
   };
 
@@ -399,7 +394,7 @@ registrationForm.addEventListener('submit', (e) => {
       modalBackground.style.display = 'none';
       document.body.classList.remove('modal-open');
      } else  {
-        alert(response.json().message);
+        alert('Неверный формат данных');
      }
   })
   .catch(function(error) {
@@ -419,7 +414,7 @@ document.getElementById('logoutButton').addEventListener('click', () => {
 });
 
 document.getElementById('deleteAccountButton').addEventListener('click', () => {
-  fetch(`http://localhost:8080/api/v2/users/${getCookie("userId")}`, {
+  fetch(`http://localhost:8080/api/v2/users/remove`, {
     method : "DELETE",
     headers: {
       "Authorization": `Bearer ${getCookie("token")}` 
@@ -485,7 +480,7 @@ function checkAndDisplayRating() {
   const movieId = new URLSearchParams(window.location.search).get('id');
   const userId = getCookie('userId');
 
-  fetch(`http://localhost:8080/api/v2/ratings/get?movieId=${movieId}&userId=${userId}`, {
+  fetch(`http://localhost:8080/api/v2/ratings/get?movieId=${movieId}`, {
     method: "GET",
     headers: {
       'Content-Type': 'application/json',
@@ -600,7 +595,6 @@ function submitRating(value) {
     body: JSON.stringify({
       value: value,
       movieId: movieId,
-      userId: userId
     })
   })
   .then(response => {
@@ -643,10 +637,9 @@ var passwordTooltip = document.getElementById('passwordTooltip');
       return;
     }
     
-    const userId = getCookie('userId');
     const movieId = new URLSearchParams(window.location.search).get('id');
     
-    fetch(`http://localhost:8080/api/v2/collections/free?userId=${userId}&movieId=${movieId}`, {
+    fetch(`http://localhost:8080/api/v2/collections/free?movieId=${movieId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`

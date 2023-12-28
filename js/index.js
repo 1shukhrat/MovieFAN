@@ -333,7 +333,7 @@ registrationForm.addEventListener('submit', (e) => {
       modalBackground.style.display = 'none';
       document.body.classList.remove('modal-open');
      } else  {
-        alert(response.json().message);
+        alert("Неверный формат данных");
      }
   })
   .catch(function(error) {
@@ -413,8 +413,8 @@ document.querySelector('#collection').addEventListener('click', function() {
       return;
     }
     window.removeEventListener("scroll", scrollEventHandler);
-    var userId = getCookie('userId');
-        fetch(`http://localhost:8080/api/v2/collections?userId=${userId}`, {
+        fetch(`http://localhost:8080/api/v2/collections`, {
+            method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -568,12 +568,10 @@ document.getElementById('closeEditCollectionModal').addEventListener('click', fu
 
 document.getElementById('addCollectionForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  var userId = getCookie('userId');
   var name = document.getElementById("collectionName").value;
   var outline = document.getElementById("collectionOutline").value;
 
   var data = {
-    userId: userId,
     name: name,
     outline: outline
   };
@@ -646,7 +644,7 @@ function removeMovieFromCollection(collectionId, movieId) {
 }
 
 document.getElementById('deleteAccountButton').addEventListener('click', () => {
-  fetch(`http://localhost:8080/api/v2/users/${getCookie("userId")}`, {
+  fetch(`http://localhost:8080/api/v2/users/remove`, {
     method : "DELETE",
     headers: {
       "Authorization": `Bearer ${getCookie("token")}` 

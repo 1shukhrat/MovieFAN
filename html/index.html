@@ -27,7 +27,7 @@
               <input type="search-field" id="search-text" placeholder="Поиск..."/>
             </form>
           </search>
-         <a href="#" id="openModalButton"><img class="avatar" src="../images/profile-round-1342-svgrepo-com.svg"></a>
+         <a href="#" id="openModalButton"><img class="avatar" src="../images/profile.svg"></a>
       </div>
    </div>
    <div id="modalBackground" class="modal-background"></div>
@@ -107,7 +107,7 @@
       <label for="collectionName">Название коллекции:</label>
       <input type="text" id="collectionName" name="collectionName" required>
       <label for="collectionOutline">Описание:</label>
-      <textarea id="collectionOutline" name="collectionOutline" required></textarea>
+      <textarea id="collectionOutline" name="collectionOutline"></textarea>
       <button type="submit">Добавить</button>
     </form>
   </div>
@@ -116,15 +116,15 @@
   <div class="modal-content">
     <span class="close" id="closeEditCollectionModal">&times;</span>
     <h2>Изменить коллекцию</h2>
-    <div id="editCollectionForm">
+    <form id="editCollectionForm">
       <label for="collectionName">Название коллекции:</label>
       <input type="text" id="collectionEditName" name="collectionName" required>
       <label for="collectionOutline">Описание:</label>
-      <textarea id="collectionEditOutline" name="collectionOutline" required></textarea>
+      <textarea id="collectionEditOutline" name="collectionOutline"></textarea>
       <button type="submit">Сохранить</button>
     </form>
   </div>
-  </div>
+</div>
    <div id="collectionContainer"></div>
    <div id="loadingIndicator" style="display: none;">Загрузка...</div>
 

@@ -202,7 +202,7 @@ function fetchMovies() {
         modalBackground.style.display = 'none';
         document.body.classList.remove('modal-open');
        } else  {
-          alert(response.json().message);
+          alert('Неверный формат данных');
        }
     })
     .catch(function(error) {
@@ -263,7 +263,7 @@ function fetchMovies() {
   });
 
   document.getElementById('deleteAccountButton').addEventListener('click', () => {
-    fetch(`http://localhost:8080/api/v2/users/${getCookie("userId")}`, {
+    fetch(`http://localhost:8080/api/v2/users/remove`, {
       method : "DELETE",
       headers: {
         "Authorization": `Bearer ${getCookie("token")}` 
