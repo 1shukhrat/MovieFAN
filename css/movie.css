@@ -1,74 +1,74 @@
 @import url(https://db.onlinewebfonts.com/c/29e676384bcea6f376417bcfee5c8595?family=ivi+Sans+Regular);
 
 body {
-   background-color: #100e19;
-   font-family: ivi Sans Regular ,Arial,Helvetica,sans-serif;
-   color: white;
-   
+  background-color: #100e19;
+  font-family: ivi Sans Regular, Arial, Helvetica, sans-serif;
+  color: white;
+
 }
 
 a {
-  color: inherit; /* Устанавливает цвет ссылки таким же, как у родительского элемента */
-  text-decoration: none; /* Убирает подчеркивание */
+  color: inherit;
+  text-decoration: none;
 }
 
 a:hover {
-  color: inherit; /* Можно изменить цвет при наведении */
-  text-decoration: none; /* Убрать подчеркивание при наведении, если необходимо */
+  color: inherit;
+  text-decoration: none;
 }
 
 .header {
-   
-   display: flex;
-   width: 99%;
 
-   height: 70px;
-   
-   border-bottom: 1px solid #fff;
-   
-   justify-content: space-between;
-   
+  display: flex;
+  width: 99%;
+
+  height: 70px;
+
+  border-bottom: 1px solid #fff;
+
+  justify-content: space-between;
+
 }
 
-.logo > h1 {
-   margin: 12px;
+.logo>h1 {
+  margin: 12px;
 }
 
 .main-nav {
-   list-style: none;
-   display: flex;
-   text-align: center;
-   padding:  0;
-   margin: 0;
-   
+  list-style: none;
+  display: flex;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+
 }
 
 .user-nav {
-   display: flex;
+  display: flex;
 
 }
 
-.main-nav > li {
-   margin: 0 10px;
+.main-nav>li {
+  margin: 0 10px;
 
 }
 
 
 .avatar {
-   height: 40px;
-   margin-top: 10px;
-   margin-right: 12px;
+  height: 40px;
+  margin-top: 10px;
+  margin-right: 12px;
 }
-   
- .search {
-   width: 300px;
-   vertical-align: middle;
-   white-space: nowrap;
-   position: relative;
- }
 
- .search input {
-   width: 180px;
+.search {
+  width: 300px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
+
+.search input {
+  width: 180px;
   height: 40px;
   background: #2b303b;
   border: none;
@@ -80,114 +80,114 @@ a:hover {
   -moz-border-radius: 5px;
   border-radius: 5px;
   margin-top: 9px;
- }
+}
 
- .search .icon{
-   position:absolute;
-   top: 3px;
-   margin-left: 15px;
-   margin-top: 17px;
-   z-index: 1;
-   color: #4f5b66;
- }
+.search .icon {
+  position: absolute;
+  top: 3px;
+  margin-left: 15px;
+  margin-top: 17px;
+  z-index: 1;
+  color: #4f5b66;
+}
 
- .movie-container {
-   display: flex;
-   margin-top: 20px;
-   align-items: flex-start;
- }
- 
- .movie-poster {
-   flex-basis: 30%;
-   padding: 10px;
-   text-align: center;
- }
- 
- .movie-poster img {
-   width: 100%;
-   height: auto;
-   max-width: 300px; 
- }
- 
- #rateButton {
-   display: block;
-   margin-top: 20px;
-   padding: 10px 20px;
-   background-color: #4CAF50;
-   color: white;
-   border: none;
-   cursor: pointer;
- }
- 
- #rateButton:hover {
-   background-color: #45a049;
- }
- 
- .movie-info {
-   flex-basis: 70%;
-   padding: 20px;
-   padding-right: 200px;
-   font-size: 18px;
- }
- 
- .movie-info h2 {
-   margin-top: 0;
-   font-size: 24px;
- }
- 
- #movieDetails {
-   list-style-type: none;
-   padding: 0;
- }
- 
- #movieDetails li {
-   margin-bottom: 10px;
- }
+.movie-container {
+  display: flex;
+  margin-top: 20px;
+  align-items: flex-start;
+}
 
- #kinobox-container {
-   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  height: 100%; 
-  width: 100%; 
+.movie-poster {
+  flex-basis: 30%;
+  padding: 10px;
+  text-align: center;
+}
+
+.movie-poster img {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+}
+
+#rateButton {
+  display: block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#rateButton:hover {
+  background-color: #45a049;
+}
+
+.movie-info {
+  flex-basis: 70%;
+  padding: 20px;
+  padding-right: 200px;
+  font-size: 18px;
+}
+
+.movie-info h2 {
+  margin-top: 0;
+  font-size: 24px;
+}
+
+#movieDetails {
+  list-style-type: none;
+  padding: 0;
+}
+
+#movieDetails li {
+  margin-bottom: 10px;
+}
+
+#kinobox-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
   z-index: 0;
- }
+}
 
- .watch-online-title {
-   text-align: center; 
-   margin-top: 20px; 
-   margin-bottom: 30px; 
- }
- 
- #movieRating, #userRating {
+.watch-online-title {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+#movieRating,
+#userRating {
   text-align: center;
   margin-top: 10px;
   font-size: 24px;
 }
 
 .comments-section {
-  text-align: center; /* Центрирование всего содержимого секции комментариев */
+  text-align: center;
   margin: 20px auto;
   width: 1000px;
 }
 
 .comments-section h3 {
-  margin-bottom: 20px; /* Отступ для заголовка */
+  margin-bottom: 20px;
 }
 
 .comment-form {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрирование содержимого по горизонтали */
-  
+  align-items: center;
 }
 
 .comment-form textarea {
-  width: 100%; /* Ширина, равная ширине плеера */
+  width: 100%;
   height: 100px;
   padding: 10px;
-  background-color: #000; /* Черный фон */
-  color: #fff; /* Белый текст */
+  background-color: #000;
+  color: #fff;
   border: 1px solid #555;
   border-radius: 4px;
   font-size: 16px;
@@ -195,12 +195,12 @@ a:hover {
 }
 
 .comment-form textarea::placeholder {
-  color: #bbb; /* Цвет для текста подсказки */
+  color: #bbb;
 }
 
 .comment-form button {
   padding: 10px 20px;
-  margin-top: 10px; /* Отступ сверху */
+  margin-top: 10px;
   background-color: #4CAF50;
   color: white;
   border: none;
@@ -208,10 +208,10 @@ a:hover {
   cursor: pointer;
   font-size: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-} 
+}
 
 .comment-form button:hover {
-  background-color: #45a049; /* Темно-зеленый фон при наведении */
+  background-color: #45a049;
 }
 
 
@@ -258,11 +258,11 @@ a:hover {
   margin-right: 5dvb;
   width: 120px;
   transition: transform 0.3s ease;
-  
+
 }
 
 .crew-member:hover {
-  transform: scale(1.1); /* Увеличивает размер карточки на 10% */
+  transform: scale(1.1);
 }
 
 .crew-photo {
@@ -302,7 +302,7 @@ a:hover {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1; /* Отображается выше контента */
+  z-index: 1;
 }
 
 .modal-content {
@@ -311,15 +311,9 @@ a:hover {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-
-
-
-/* Скрыть прокрутку фона, когда модальное окно открыто */
 body.modal-open {
   overflow: hidden;
 }
-
-/* Стили для модального окна */
 .modal {
   display: none;
   position: fixed;
@@ -331,42 +325,35 @@ body.modal-open {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 2;
-  
-}
 
-/* Заголовок модального окна */
+}
 .modal h2 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #fff; /* Цвет текста заголовка */
+  color: #fff;
 }
-
-/* Закрыть кнопку */
 .close {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 24px;
-  color: #fff; /* Цвет крестика */
+  color: #fff;
   cursor: pointer;
 }
-
-/* Стили для формы */
 .modal form {
   display: flex;
   flex-direction: column;
 }
-
-/* Стили для полей ввода */
 .modal input[type="text"],
 .modal input[type="password"] {
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc; /* Цвет границы полей ввода */
+  border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
   outline: none;
 }
+
 .tooltip {
   visibility: hidden;
   width: 200px;
@@ -379,21 +366,16 @@ body.modal-open {
   z-index: 1;
   bottom: 100%;
   left: 50%;
-  margin-left: -100px; /* Половина ширины элемента */
+  margin-left: -100px;
   font-size: 12px;
 }
-
-/* Стили для отображения подсказки */
 .show-tooltip {
   visibility: visible;
 }
-
-
-/* Стили для кнопок */
 .modal button {
   padding: 10px 20px;
-  background-color: #007bff; /* Цвет фона кнопок */
-  color: #fff; /* Цвет текста кнопок */
+  background-color: #007bff;
+  color: #fff;
   border: none;
   border-radius: 5px;
   font-size: 18px;
@@ -415,18 +397,18 @@ body.modal-open {
 .review-author {
   font-size: 16px;
   color: #fff;
-  margin-bottom: 5px; /* Отступ между автором и текстом отзыва */
+  margin-bottom: 5px;
 }
 
 .review-text {
   text-align: left;
-  margin-bottom: 10px; /* Отступ между текстом отзыва и кнопкой удаления */
+  margin-bottom: 10px;
 }
 
 .review button {
   padding: 5px 10px;
-  background-color: #db1a1a; /* Красный фон */
-  color: white; /* Белый текст */
+  background-color: #db1a1a;
+  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -434,107 +416,103 @@ body.modal-open {
 }
 
 .review button:hover {
-  background-color: #b31414; /* Темно-красный фон при наведении */
+  background-color: #b31414;
 }
 
 .movie-poster {
-  text-align: center; /* Выравнивание содержимого по центру */
-  margin-bottom: 10px; /* Отступ снизу, если нужен */
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-#movieRating, #userRating {
-  margin-top: 10px; /* Отступ сверху от изображения */
+#movieRating,
+#userRating {
+  margin-top: 10px;
 }
 
 
 #ratingContainer button {
-  display: block; /* Блочный элемент */
-  margin: 10px auto; /* Отступ и автоматическое выравнивание по центру */
-  padding: 10px 0; /* Отступы сверху и снизу */
-  background-color: #4CAF50; /* Зеленый фон */
-  color: white; /* Белый текст */
+  display: block;
+  margin: 10px auto;
+  padding: 10px 0;
+  background-color: #4CAF50;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  width: 210px; /* Автоматическая ширина */
+  width: 210px;
 }
 
 #ratingContainer button:hover {
-  background-color: #45a049; /* Темно-зеленый фон при наведении */
+  background-color: #45a049;
 }
 
 #ratingContainer input {
-  -webkit-appearance: none; /* Убираем стандартный вид для Webkit-браузеров */
+  -webkit-appearance: none;
   appearance: none;
-  width: 210px; /* Ширина слайдера */
-  height: 10px; /* Высота ползунка */
-  background: #2b303b; /* Цвет фона ползунка */
-  outline: none; /* Убираем контур при фокусе */
-  opacity: 0.7; /* Прозрачность ползунка */
-  -webkit-transition: .2s; /* Анимация при наведении */
+  width: 210px;
+  height: 10px;
+  background: #2b303b;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
   transition: opacity .2s;
   margin-bottom: 20px;
   margin-left: 30px;
-  
+
 }
 
 #ratingContainer input::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Убираем стандартный вид для Webkit-браузеров */
+  -webkit-appearance: none;
   appearance: none;
-  width: 25px; /* Ширина ползунка */
-  height: 25px; /* Высота ползунка */
-  background: #4CAF50; /* Цвет ползунка */
-  cursor: pointer; /* Вид курсора */
-  border-radius: 50%; /* Скругляем углы */
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+  border-radius: 50%;
 }
 
 #ratingContainer input::-moz-range-thumb {
-  width: 25px; /* Ширина ползунка */
-  height: 25px; /* Высота ползунка */
-  background: #4CAF50; /* Цвет ползунка */
-  cursor: pointer; /* Вид курсора */
-  border-radius: 50%; /* Скругляем углы */
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+  border-radius: 50%;
 }
 
 #rangeValueDisplay {
   margin-left: 20px;
   font-size: 20px;
-  color: #fff; /* Цвет текста */
+  color: #fff;
 }
 
 
 #collectionContainer {
-  text-align: center; /* Выравнивание по центру */
-  margin-top: 10px; /* Отступ сверху */
+  text-align: center;
+  margin-top: 10px;
 }
 
 #collectionSelect {
-  padding: 10px; /* Внутренний отступ */
-  background-color: #2b303b; /* Темно-серый фон */
-  color: white; /* Белый текст */
-  border: 1px solid #555; /* Темно-серая граница */
-  border-radius: 5px; /* Скругление углов */
-  font-size: 16px; /* Размер шрифта */
-  cursor: pointer; /* Вид курсора */
-  outline: none; /* Убираем стандартный контур */
+  padding: 10px;
+  background-color: #2b303b;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
 }
 
 #collectionSelect:hover {
-  background-color: #3c4452; /* Немного светлее при наведении */
+  background-color: #3c4452;
 }
 
 #collectionSelect:focus {
-  background-color: #4f5b66; /* Светло-серый фон при фокусе */
+  background-color: #4f5b66;
 }
 
 #collectionSelect option {
-  background-color: #100e19; /* Фиолетовый фон для опций */
-  color: white; /* Белый текст */
-  padding: 5px; /* Внутренний отступ */
+  background-color: #100e19;
+  color: white;
+  padding: 5px;
 }
-
-
-
-
-

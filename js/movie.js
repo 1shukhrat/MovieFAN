@@ -1,87 +1,87 @@
-document.addEventListener("DOMContentLoaded", function() {
-   const movieId = new URLSearchParams(window.location.search).get('id');
-   fetchMovieDetails(movieId);
-   insertKinoboxPlayer(movieId);
-   fetchMovieStaff(movieId);
+document.addEventListener("DOMContentLoaded", function () {
+  const movieId = new URLSearchParams(window.location.search).get('id');
+  fetchMovieDetails(movieId);
+  insertKinoboxPlayer(movieId);
+  fetchMovieStaff(movieId);
 
-   checkAndDisplayRating();
+  checkAndDisplayRating();
 
-   const crewList = document.getElementById('movieCrew');
-    const leftScrollButton = document.querySelector('.left-scroll');
-    const rightScrollButton = document.querySelector('.right-scroll');
+  const crewList = document.getElementById('movieCrew');
+  const leftScrollButton = document.querySelector('.left-scroll');
+  const rightScrollButton = document.querySelector('.right-scroll');
 
-    leftScrollButton.addEventListener('click', () => {
-        crewList.scrollLeft -= 100; // Можно настроить значение
-    });
+  leftScrollButton.addEventListener('click', () => {
+    crewList.scrollLeft -= 100;
+  });
 
-    rightScrollButton.addEventListener('click', () => {
-        crewList.scrollLeft += 100; // Можно настроить значение
-    });
- });
- 
- function fetchMovieDetails(movieId) {
-   fetch(`http://localhost:8080/api/v1/movies/${movieId}`) 
-     .then(response => response.json())
-     .then(movie => {
-       displayMovieDetails(movie);
-       document.title = movie.title;
-       document.getElementById('ratingValue').textContent = movie.userRating.toFixed(1);
-     })
-     .catch(error => console.error('Ошибка:', error));
- }
- 
- function displayMovieDetails(movie) {
-   document.getElementById('posterImage').src = movie.posterUrl;
-   document.getElementById('movieTitle').textContent = movie.title;
- 
-   // Заполнение деталей фильма
-   const detailsList = document.getElementById('movieDetails');
-   detailsList.innerHTML = '';
- 
-   const outlineItem = document.createElement('li');
-   outlineItem.textContent = `Описание: ${movie.outline}`;
-   detailsList.appendChild(outlineItem);
+  rightScrollButton.addEventListener('click', () => {
+    crewList.scrollLeft += 100;
+  });
+});
 
-   const yearItem = document.createElement('li');
-   yearItem.textContent = `Год: ${movie.yearOfRelease}`;
-   detailsList.appendChild(yearItem);
- 
-   const countriesItem = document.createElement('li');
-   countriesItem.textContent = `Страны: ${movie.countries.map(country => country.name).join(', ')}`;
-   detailsList.appendChild(countriesItem);
- 
-   const genresItem = document.createElement('li');
-   genresItem.textContent = `Жанры: ${movie.genres.map(genre => genre.name).join(', ')}`;
-   detailsList.appendChild(genresItem);
- }
+function fetchMovieDetails(movieId) {
+  fetch(`http://localhost:8080/api/v1/movies/${movieId}`)
+    .then(response => response.json())
+    .then(movie => {
+      displayMovieDetails(movie);
+      document.title = movie.title;
+      document.getElementById('ratingValue').textContent = movie.userRating.toFixed(1);
+    })
+    .catch(error => console.error('Ошибка:', error));
+}
 
- function insertKinoboxPlayer(movieId) {
-   const kinoboxContainer = document.getElementById('kinobox-container');
- 
-   const kinoboxPlayer = document.createElement('div');
-   kinoboxPlayer.className = 'kinobox_player';
-   kinoboxPlayer.style.width = '1000px';
-   kinoboxPlayer.style.zIndex = '0'
-   kinoboxContainer.appendChild(kinoboxPlayer);
- 
-   const kinoboxScript = document.createElement('script');
-   kinoboxScript.src = 'https://kinobox.tv/kinobox.min.js';
-   document.body.appendChild(kinoboxScript);
- 
-   kinoboxScript.onload = () => {
-     new Kinobox('.kinobox_player', { 
-      search: { 
-         kinopoisk: movieId 
+function displayMovieDetails(movie) {
+  document.getElementById('posterImage').src = movie.posterUrl;
+  document.getElementById('movieTitle').textContent = movie.title;
+
+
+  const detailsList = document.getElementById('movieDetails');
+  detailsList.innerHTML = '';
+
+  const outlineItem = document.createElement('li');
+  outlineItem.textContent = `Описание: ${movie.outline}`;
+  detailsList.appendChild(outlineItem);
+
+  const yearItem = document.createElement('li');
+  yearItem.textContent = `Год: ${movie.yearOfRelease}`;
+  detailsList.appendChild(yearItem);
+
+  const countriesItem = document.createElement('li');
+  countriesItem.textContent = `Страны: ${movie.countries.map(country => country.name).join(', ')}`;
+  detailsList.appendChild(countriesItem);
+
+  const genresItem = document.createElement('li');
+  genresItem.textContent = `Жанры: ${movie.genres.map(genre => genre.name).join(', ')}`;
+  detailsList.appendChild(genresItem);
+}
+
+function insertKinoboxPlayer(movieId) {
+  const kinoboxContainer = document.getElementById('kinobox-container');
+
+  const kinoboxPlayer = document.createElement('div');
+  kinoboxPlayer.className = 'kinobox_player';
+  kinoboxPlayer.style.width = '1000px';
+  kinoboxPlayer.style.zIndex = '0'
+  kinoboxContainer.appendChild(kinoboxPlayer);
+
+  const kinoboxScript = document.createElement('script');
+  kinoboxScript.src = 'https://kinobox.tv/kinobox.min.js';
+  document.body.appendChild(kinoboxScript);
+
+  kinoboxScript.onload = () => {
+    new Kinobox('.kinobox_player', {
+      search: {
+        kinopoisk: movieId
       },
       hide: ['alloha', 'cdnmovies'],
-   }).init();
-   };
- }
+    }).init();
+  };
+}
 
- document.getElementById('submitComment').addEventListener('click', () => {
+document.getElementById('submitComment').addEventListener('click', () => {
   const token = getCookie('token');
   if (!token) {
-    // Показываем модальное окно авторизации
+
     authModal.style.display = 'block';
     modalBackground.style.display = 'block';
     document.body.classList.add('modal-open');
@@ -105,24 +105,24 @@ document.addEventListener("DOMContentLoaded", function() {
     },
     body: JSON.stringify(requestBody)
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Ошибка при отправке отзыва');
-    }
-    return response.json();
-  })
-  .then(() => {
-    // Повторный запрос всех отзывов после успешного добавления
-    currentPage = 0;
-    isLastPage = false;
-    fetchReviews(movieId, currentPage);
-    document.getElementById('commentText').value = '';
-  })
-  .catch(error => console.error('Ошибка:', error));
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Ошибка при отправке отзыва');
+      }
+      return response.json();
+    })
+    .then(() => {
+
+      currentPage = 0;
+      isLastPage = false;
+      fetchReviews(movieId, currentPage);
+      document.getElementById('commentText').value = '';
+    })
+    .catch(error => console.error('Ошибка:', error));
 });
 
 function fetchMovieStaff(movieId) {
-  fetch(`http://localhost:8080/api/v1/movies/${movieId}/staff`) 
+  fetch(`http://localhost:8080/api/v1/movies/${movieId}/staff`)
     .then(response => response.json())
     .then(staff => {
       displayMovieStaff(staff);
@@ -132,18 +132,18 @@ function fetchMovieStaff(movieId) {
 
 function displayMovieStaff(staff) {
   const crewContainer = document.getElementById('movieCrew');
-    crewContainer.innerHTML = '';
+  crewContainer.innerHTML = '';
 
-    staff.directors.forEach(director => {
-        const directorItem = createCrewMemberListItem(director.id, director.fullName, director.photoUrl, "Режиссёр");
-        crewContainer.appendChild(directorItem);
-        });
+  staff.directors.forEach(director => {
+    const directorItem = createCrewMemberListItem(director.id, director.fullName, director.photoUrl, "Режиссёр");
+    crewContainer.appendChild(directorItem);
+  });
 
-    staff.actors.forEach(actor => {
-        const actorItem = createCrewMemberListItem(actor.id, actor.fullName, actor.photoUrl, "Актёр");
-        crewContainer.appendChild(actorItem);
-        
-    });
+  staff.actors.forEach(actor => {
+    const actorItem = createCrewMemberListItem(actor.id, actor.fullName, actor.photoUrl, "Актёр");
+    crewContainer.appendChild(actorItem);
+
+  });
 }
 
 function createCrewMemberListItem(id, name, photoUrl, role) {
@@ -151,7 +151,7 @@ function createCrewMemberListItem(id, name, photoUrl, role) {
   listItem.classList.add('crew-member');
 
   const img = document.createElement('img');
-  img.src = photoUrl ? photoUrl : '../images/no-poster.gif'; // Замените на путь к вашему дефолтному изображению
+  img.src = photoUrl ? photoUrl : '../images/no-poster.gif';
   img.alt = name;
   img.classList.add('crew-photo');
   listItem.appendChild(img);
@@ -166,7 +166,7 @@ function createCrewMemberListItem(id, name, photoUrl, role) {
   roleElement.classList.add('crew-role');
   listItem.appendChild(roleElement);
 
-  listItem.addEventListener('click', function()  {
+  listItem.addEventListener('click', function () {
     window.location.href = `staff.html?id=${id}&role=${role}`;
   })
   return listItem;
@@ -188,7 +188,7 @@ function fetchReviews(movieId, page) {
         return;
       }
       displayReviews(reviews);
-      currentPage++; // Увеличиваем номер страницы для следующего запроса
+      currentPage++;
     })
     .catch(error => console.error('Ошибка при загрузке отзывов:', error));
 }
@@ -227,7 +227,7 @@ function displayReviews(reviews) {
 
 
 function deleteReview(reviewId, reviewElement) {
-  const token = getCookie('token'); // Получение token из cookie
+  const token = getCookie('token');
 
   if (!token) {
     console.error('Токен не найден');
@@ -242,20 +242,20 @@ function deleteReview(reviewId, reviewElement) {
       'Authorization': `Bearer ${token}`
     }
   })
-  .then(response => {
-    if (response.ok) {
-      currentPage = 0;
-      isLastPage = false;
-      const movieId = new URLSearchParams(window.location.search).get('id');
-      fetchReviews(movieId, currentPage);
+    .then(response => {
+      if (response.ok) {
+        currentPage = 0;
+        isLastPage = false;
+        const movieId = new URLSearchParams(window.location.search).get('id');
+        fetchReviews(movieId, currentPage);
 
-      // Повторный запрос всех отзывов или удаление элемента отзыва из DOM
-    } else {
-      console.error('Ошибка при удалении отзыва');
-      reviewElement.style.display = ' ';
-    }
-  })
-  .catch(error => console.error('Ошибка:', error));
+
+      } else {
+        console.error('Ошибка при удалении отзыва');
+        reviewElement.style.display = ' ';
+      }
+    })
+    .catch(error => console.error('Ошибка:', error));
   reviewElement.style.display = ' ';
 }
 
@@ -295,7 +295,7 @@ openModalButton.addEventListener('click', () => {
   }
 });
 
-// Закрытие модального окна при нажатии на крестик
+
 const closeModalButton = document.getElementById('closeModalButton');
 
 closeModalButton.addEventListener('click', () => {
@@ -304,7 +304,7 @@ closeModalButton.addEventListener('click', () => {
   document.body.classList.remove('modal-open');
 });
 
-// Открытие модального окна регистрации при нажатии на ссылку "Зарегистрироваться"
+
 const showRegistrationLink = document.getElementById('showRegistration');
 const registrationModal = document.getElementById('registrationModal');
 
@@ -313,10 +313,10 @@ showRegistrationLink.addEventListener('click', () => {
   registrationModal.style.display = 'block';
   modalBackground.style.display = 'block';
   document.body.classList.add('modal-open');
-  
+
 });
 
-// Закрытие модального окна регистрации при нажатии на крестик
+
 const closeRegistrationModalButton = document.getElementById('closeRegistrationModal');
 
 closeRegistrationModalButton.addEventListener('click', () => {
@@ -325,49 +325,48 @@ closeRegistrationModalButton.addEventListener('click', () => {
   document.body.classList.remove('modal-open');
 });
 
-// Обработка отправки формы авторизации
 const loginForm = document.getElementById('loginForm');
 
 loginForm.addEventListener('submit', (e) => {
-  e.preventDefault(); // Предотвращаем стандартное действие формы (перезагрузку страницы)
+  e.preventDefault();
   var login = document.getElementById("username").value;
   var password = document.getElementById("password").value;
 
   var data = {
-     login: login,
-     password: password
+    login: login,
+    password: password
   };
 
   fetch("http://localhost:8080/api/v2/auth/signIn", {
-     method: "POST",
-     headers: {
-        "Content-Type": "application/json"
-     },
-     body: JSON.stringify(data)
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
   })
-  .then(function(response) {
-     if (response.ok) {
-      return response.json();
-      
-     } else {
+    .then(function (response) {
+      if (response.ok) {
+        return response.json();
+
+      } else {
         alert("Неправильный логин или пароль");
-     }
-  })
-  .then(dataResponse => {
+      }
+    })
+    .then(dataResponse => {
       setCookie('userId', dataResponse.id);
-       setCookie('username', dataResponse.username);
-       setCookie('token', dataResponse.token);
+      setCookie('username', dataResponse.username);
+      setCookie('token', dataResponse.token);
       authModal.style.display = 'none';
       modalBackground.style.display = 'none';
       document.body.classList.remove('modal-open');
       window.location.reload();
-  })
-  .catch(function(error) {
-     console.error("Ошибка:", error);
-  });
+    })
+    .catch(function (error) {
+      console.error("Ошибка:", error);
+    });
 });
 
-// Обработка отправки формы регистрации (по аналогии с формой авторизации)
+
 const registrationForm = document.getElementById('registrationForm');
 
 registrationForm.addEventListener('submit', (e) => {
@@ -377,30 +376,30 @@ registrationForm.addEventListener('submit', (e) => {
   var password = document.getElementById("newPassword").value;
 
   var data = {
-     login: login,
-     password: password
+    login: login,
+    password: password
   };
 
   fetch("http://localhost:8080/api/v2/auth/signUp", {
-     method: "POST",
-     headers: {
-        "Content-Type": "application/json"
-     },
-     body: JSON.stringify(data)
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
   })
-  .then(function(response) {
-     if (response.ok) {
-      registrationModal.style.display = 'none';
-      modalBackground.style.display = 'none';
-      document.body.classList.remove('modal-open');
-     } else  {
+    .then(function (response) {
+      if (response.ok) {
+        registrationModal.style.display = 'none';
+        modalBackground.style.display = 'none';
+        document.body.classList.remove('modal-open');
+      } else {
         alert('Неверный формат данных');
-     }
-  })
-  .catch(function(error) {
-     console.error("Ошибка:", error);
-  });
-  // Добавьте код для отправки данных на сервер и обработки регистрации
+      }
+    })
+    .catch(function (error) {
+      console.error("Ошибка:", error);
+    });
+
 });
 
 document.getElementById('logoutButton').addEventListener('click', () => {
@@ -415,22 +414,22 @@ document.getElementById('logoutButton').addEventListener('click', () => {
 
 document.getElementById('deleteAccountButton').addEventListener('click', () => {
   fetch(`http://localhost:8080/api/v2/users/remove`, {
-    method : "DELETE",
+    method: "DELETE",
     headers: {
-      "Authorization": `Bearer ${getCookie("token")}` 
+      "Authorization": `Bearer ${getCookie("token")}`
     }
   })
-  .then(response => {
-    if (response.ok) {
-      setCookie('userId', '', -1);
-      setCookie('username', '', -1);
-      setCookie('token', '', -1);
-      userModal.style.display = 'none';
-      modalBackground.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      window.location.reload();
-    }
-  })
+    .then(response => {
+      if (response.ok) {
+        setCookie('userId', '', -1);
+        setCookie('username', '', -1);
+        setCookie('token', '', -1);
+        userModal.style.display = 'none';
+        modalBackground.style.display = 'none';
+        document.body.classList.remove('modal-open');
+        window.location.reload();
+      }
+    })
 });
 
 function setCookie(name, value) {
@@ -438,16 +437,16 @@ function setCookie(name, value) {
   var date = new Date();
   date.setTime(date.getTime() + (24 * 60 * 60 * 1000));
   expires = "; expires=" + date.toUTCString();
-  document.cookie = name + "=" + (value || "")  + expires + "; path=/; SameSite=Strict";
+  document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Strict";
 }
 
 function getCookie(name) {
   var nameEQ = name + "=";
   var ca = document.cookie.split(';');
-  for(var i=0;i < ca.length;i++) {
+  for (var i = 0; i < ca.length; i++) {
     var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1,c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
   }
   return null;
 }
@@ -489,7 +488,7 @@ function checkAndDisplayRating() {
   })
     .then(response => {
       if (!response.ok && response.status === 404) {
-        displayRatingButton(); // Показать кнопку для оценки
+        displayRatingButton();
       } else {
         return response.json();
       }
@@ -498,7 +497,7 @@ function checkAndDisplayRating() {
       if (data) {
         displayUserRating(data.value);
         displayDeleteRatingButton(data.id);
-         // Показать оценку пользователя
+
       }
     })
     .catch(error => console.error('Ошибка:', error));
@@ -511,15 +510,15 @@ function displayRatingButton() {
   ratingButton.onclick = () => {
     const token = getCookie('token');
     if (!token) {
-      // Показать модальное окно авторизации
+
       authModal.style.display = 'block';
       modalBackground.style.display = 'block';
       document.body.classList.add('modal-open');
     } else {
-      // Показать селектор для оценки
+
       displayRangeSelector();
     }
-  } 
+  }
   ratingContainer.appendChild(ratingButton);
 }
 
@@ -538,13 +537,13 @@ function displayDeleteRatingButton(ratingId) {
     })
       .then(response => {
         if (response.ok) {
-           window.location.reload();
+          window.location.reload();
         }
       })
       .catch(error => console.error('Ошибка:', error));
   }
   ratingContainer.appendChild(ratingDeleteButton);
-} 
+}
 
 
 function displayUserRating(value) {
@@ -561,19 +560,19 @@ function displayRangeSelector() {
   rangeInput.type = 'range';
   rangeInput.min = '0';
   rangeInput.max = '10';
-  rangeInput.value = '5'; // Начальное значение
+  rangeInput.value = '5';
 
-  const valueDisplay = document.createElement('span'); // Элемент для отображения значения
+  const valueDisplay = document.createElement('span');
   valueDisplay.textContent = `${rangeInput.value}`;
-  valueDisplay.id = 'rangeValueDisplay'; // Добавляем ID для удобства
+  valueDisplay.id = 'rangeValueDisplay';
 
-  // Обновление отображаемого значения при изменении ползунка
-  rangeInput.addEventListener('input', function() {
+
+  rangeInput.addEventListener('input', function () {
     valueDisplay.textContent = `${this.value}`;
   });
 
   ratingContainer.appendChild(rangeInput);
-  ratingContainer.appendChild(valueDisplay); // До
+  ratingContainer.appendChild(valueDisplay);
 
   const submitButton = document.createElement('button');
   submitButton.textContent = 'Оценить';
@@ -597,89 +596,89 @@ function submitRating(value) {
       movieId: movieId,
     })
   })
-  .then(response => {
-    if (response.ok) {
-      console.log('Оценка добавлена');
-      window.location.reload();
-      // Обновить отображение оценки
-    } else {
-      console.error('Ошибка при добавлении оценки');
-    }
-  })
-  .catch(error => console.error('Ошибка:', error));
+    .then(response => {
+      if (response.ok) {
+        console.log('Оценка добавлена');
+        window.location.reload();
+
+      } else {
+        console.error('Ошибка при добавлении оценки');
+      }
+    })
+    .catch(error => console.error('Ошибка:', error));
 }
 
 
 var passwordInput = document.getElementById('newPassword');
 var passwordTooltip = document.getElementById('passwordTooltip');
 
-  passwordInput.addEventListener('mouseover', function() {
-    passwordTooltip.classList.add('show-tooltip');
-  });
+passwordInput.addEventListener('mouseover', function () {
+  passwordTooltip.classList.add('show-tooltip');
+});
 
-  passwordInput.addEventListener('mouseout', function() {
-    passwordTooltip.classList.remove('show-tooltip');
-  });
+passwordInput.addEventListener('mouseout', function () {
+  passwordTooltip.classList.remove('show-tooltip');
+});
 
-  const collectionSelect = document.getElementById('collectionSelect');
-  if (!getCookie("token")) {
-    collectionSelect.style.display = 'none';
+const collectionSelect = document.getElementById('collectionSelect');
+if (!getCookie("token")) {
+  collectionSelect.style.display = 'none';
+}
+
+collectionSelect.addEventListener('focus', function () {
+  loadCollections();
+});
+
+function loadCollections() {
+  const token = getCookie('token');
+  if (!token) {
+    document.getElementById('collectionContainer').style.display = 'none';
+    return;
   }
 
-  collectionSelect.addEventListener('focus', function() {
-      loadCollections();
-  });
-  
-  function loadCollections() {
-    const token = getCookie('token');
-    if (!token) {
-      document.getElementById('collectionContainer').style.display = 'none';
-      return;
+  const movieId = new URLSearchParams(window.location.search).get('id');
+
+  fetch(`http://localhost:8080/api/v2/collections/free?movieId=${movieId}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
     }
-    
-    const movieId = new URLSearchParams(window.location.search).get('id');
-    
-    fetch(`http://localhost:8080/api/v2/collections/free?movieId=${movieId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
+  })
+    .then(response => response.json())
+    .then(data => {
+      collectionSelect.innerHTML = '<option value="">Добавить в коллекцию</option>';
+      data.forEach(collection => {
+        const option = document.createElement('option');
+        option.value = collection.id;
+        option.textContent = collection.name;
+        collectionSelect.appendChild(option);
+      });
     })
-      .then(response => response.json())
-      .then(data => {
-        collectionSelect.innerHTML = '<option value="">Добавить в коллекцию</option>';
-        data.forEach(collection => {
-          const option = document.createElement('option');
-          option.value = collection.id;
-          option.textContent = collection.name;
-          collectionSelect.appendChild(option);
-        });
-      })
-      .catch(error => console.error('Ошибка:', error));
-  }
+    .catch(error => console.error('Ошибка:', error));
+}
 
-  document.getElementById('collectionSelect').addEventListener('change', function() {
-    const collectionId = this.value;
-    if (!collectionId) return;
-  
-    const movieId = new URLSearchParams(window.location.search).get('id');
-    const token = getCookie('token');
-  
-    fetch(`http://localhost:8080/api/v2/collections/${collectionId}/addMovie?movieId=${movieId}`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
+document.getElementById('collectionSelect').addEventListener('change', function () {
+  const collectionId = this.value;
+  if (!collectionId) return;
+
+  const movieId = new URLSearchParams(window.location.search).get('id');
+  const token = getCookie('token');
+
+  fetch(`http://localhost:8080/api/v2/collections/${collectionId}/addMovie?movieId=${movieId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
     .then(response => {
       if (response.ok) {
-        loadCollections(); // Перезагрузить список после успешного добавления
+        loadCollections();
       } else {
         console.error('Ошибка при добавлении в коллекцию');
       }
     })
     .catch(error => console.error('Ошибка:', error));
-  });
+});
 
 
 
@@ -687,4 +686,3 @@ var passwordTooltip = document.getElementById('passwordTooltip');
 
 
 
- 

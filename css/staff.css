@@ -1,80 +1,79 @@
 @import url(https://db.onlinewebfonts.com/c/29e676384bcea6f376417bcfee5c8595?family=ivi+Sans+Regular);
 
 body {
-   background-color: #100e19;
-   font-family: ivi Sans Regular ,Arial,Helvetica,sans-serif;
-   color: white;
-   
+  background-color: #100e19;
+  font-family: ivi Sans Regular, Arial, Helvetica, sans-serif;
+  color: white;
+
 }
 
 a {
-   color: inherit; /* Устанавливает цвет ссылки таким же, как у родительского элемента */
-   text-decoration: none; /* Убирает подчеркивание */
- }
- 
- a:hover {
-   color: inherit; /* Можно изменить цвет при наведении */
-   text-decoration: none; /* Убрать подчеркивание при наведении, если необходимо */
- }
-
-.header {
-   
-   display: flex;
-   width: 99%;
-   /*position: fixed;*/
-   height: 70px;
-   
-   border-bottom: 1px solid #fff;
-   
-   justify-content: space-between;
-   
+  color: inherit;
+  text-decoration: none;
 }
 
-.logo > h1 {
-   margin: 12px;
+a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.header {
+
+  display: flex;
+  width: 99%;
+  height: 70px;
+
+  border-bottom: 1px solid #fff;
+
+  justify-content: space-between;
+
+}
+
+.logo>h1 {
+  margin: 12px;
 }
 
 .main-nav {
-   list-style: none;
-   display: flex;
-   text-align: center;
-   padding:  0;
-   margin: 0;
+  list-style: none;
+  display: flex;
+  text-align: center;
+  padding: 0;
+  margin: 0;
 
-   
+
 }
 
 .user-nav {
-   display: flex;
+  display: flex;
 
 }
 
-.main-nav > li {
-   margin: 0 10px;
+.main-nav>li {
+  margin: 0 10px;
 
 }
 
 
 .avatar {
-   height: 40px;
-   margin-top: 10px;
-   margin-right: 12px;
+  height: 40px;
+  margin-top: 10px;
+  margin-right: 12px;
 }
 
 .movies {
-   display: flex;
-   width: 99%;
+  display: flex;
+  width: 99%;
 }
-   
- .search {
-   width: 300px;
-   vertical-align: middle;
-   white-space: nowrap;
-   position: relative;
- }
 
- .search input {
-   width: 180px;
+.search {
+  width: 300px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
+
+.search input {
+  width: 180px;
   height: 40px;
   background: #2b303b;
   border: none;
@@ -86,96 +85,96 @@ a {
   -moz-border-radius: 5px;
   border-radius: 5px;
   margin-top: 9px;
- }
+}
 
- .search .icon{
-   position:absolute;
-   top: 3px;
-   margin-left: 15px;
-   margin-top: 17px;
-   z-index: 1;
-   color: #4f5b66;
- }
+.search .icon {
+  position: absolute;
+  top: 3px;
+  margin-left: 15px;
+  margin-top: 17px;
+  z-index: 1;
+  color: #4f5b66;
+}
 
- .actor-info {
-   display: flex;
-   align-items: center;
-   justify-content: center; /* Центрирование карточек */
-   border-bottom: 1px solid #fff;
-   width: 99%;
-   margin-top: 50px;
-   margin-bottom: 50px;
-   padding-bottom: 50px;
- }
- 
- .actor-image {
-   margin-right: 20px; /* отступ между изображением и информацией об актере */
- }
- 
- .actor-image img {
-   width: 230px; /* задайте нужную ширину фотографии */
-   height: 350px; /* высота подстраивается под пропорции изображения */
-   border-radius: 5%; /* для круглой формы фотографии */
- }
- 
- .actor-details {
-   text-align: left;
-   padding-bottom: 200px;
-   margin-left: 20px;
- }
- 
- .actor-details h1 {
-   margin: 0;
-   font-size: 1.5em; /* размер имени актера */
-   font-weight: bold;
- }
- 
- .actor-details h2 {
-   margin: 5px 0;
-   font-size: 1.2em; /* размер роли актера */
- }
- 
+.actor-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #fff;
+  width: 99%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+}
 
- #moviesContainer {
-   display: flex;
-   flex-wrap: wrap; /* Перенос строк для карточек */
-   margin-top: 20px; /* Отступ сверху */
- }
+.actor-image {
+  margin-right: 20px;
+}
 
- .movie-card {
-   padding: 10px;
-   margin: 10px;
-   width: 200px;
-   display: inline-block;
-   vertical-align: top;
-   transition: transform 0.3s ease;
- }
- 
- .movie-image {
-   width: 100%;
-   height: auto;
-   border-radius: 10px;
-   
- }
+.actor-image img {
+  width: 230px;
+  height: 350px;
+  border-radius: 5%;
+}
 
- .movie-card:hover {
-   transform: scale(1.1);
- }
- 
- .movie-title {
-   font-size: 16px;
-   font-weight: bold;
- }
+.actor-details {
+  text-align: left;
+  padding-bottom: 200px;
+  margin-left: 20px;
+}
+
+.actor-details h1 {
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.actor-details h2 {
+  margin: 5px 0;
+  font-size: 1.2em;
+}
 
 
- 
- #loadingIndicator {
-   text-align: center;
-   padding: 20px;
- }
+#moviesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.movie-card {
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+  display: inline-block;
+  vertical-align: top;
+  transition: transform 0.3s ease;
+}
+
+.movie-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+
+}
+
+.movie-card:hover {
+  transform: scale(1.1);
+}
+
+.movie-title {
+  font-size: 16px;
+  font-weight: bold;
+}
 
 
- 
+
+#loadingIndicator {
+  text-align: center;
+  padding: 20px;
+}
+
+
+
 .modal-background {
   display: none;
   position: fixed;
@@ -184,7 +183,7 @@ a {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1; /* Отображается выше контента */
+  z-index: 1;
 }
 
 .modal-content {
@@ -193,15 +192,9 @@ a {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-
-
-
-/* Скрыть прокрутку фона, когда модальное окно открыто */
 body.modal-open {
   overflow: hidden;
 }
-
-/* Стили для модального окна */
 .modal {
   display: none;
   position: fixed;
@@ -213,59 +206,40 @@ body.modal-open {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 2;
-  
-}
 
-/* Заголовок модального окна */
+}
 .modal h2 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #fff; /* Цвет текста заголовка */
+  color: #fff;
 }
-
-/* Закрыть кнопку */
 .close {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 24px;
-  color: #fff; /* Цвет крестика */
+  color: #fff;
   cursor: pointer;
 }
-
-/* Стили для формы */
 .modal form {
   display: flex;
   flex-direction: column;
 }
-
-/* Стили для полей ввода */
 .modal input[type="text"],
 .modal input[type="password"] {
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc; /* Цвет границы полей ввода */
+  border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
   outline: none;
 }
-
-/* Стили для кнопок */
 .modal button {
   padding: 10px 20px;
-  background-color: #007bff; /* Цвет фона кнопок */
-  color: #fff; /* Цвет текста кнопок */
+  background-color: #007bff;
+  color: #fff;
   border: none;
   border-radius: 5px;
   font-size: 18px;
   cursor: pointer;
 }
-
-
-
-
-
- 
-   
-  
-

@@ -1,80 +1,79 @@
 @import url(https://db.onlinewebfonts.com/c/29e676384bcea6f376417bcfee5c8595?family=ivi+Sans+Regular);
 
 body {
-   background-color: #100e19;
-   font-family: ivi Sans Regular ,Arial,Helvetica,sans-serif;
-   color: white;
-   
+  background-color: #100e19;
+  font-family: ivi Sans Regular, Arial, Helvetica, sans-serif;
+  color: white;
+
 }
 
 a {
-   color: inherit; /* Устанавливает цвет ссылки таким же, как у родительского элемента */
-   text-decoration: none; /* Убирает подчеркивание */
- }
- 
- a:hover {
-   color: inherit; /* Можно изменить цвет при наведении */
-   text-decoration: none; /* Убрать подчеркивание при наведении, если необходимо */
- }
-
-.header {
-   
-   display: flex;
-   width: 99%;
-   /*position: fixed;*/
-   height: 70px;
-   
-   border-bottom: 1px solid #fff;
-   
-   justify-content: space-between;
-   
+  color: inherit;
+  text-decoration: none;
 }
 
-.logo > h1 {
-   margin: 12px;
+a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.header {
+
+  display: flex;
+  width: 99%;
+  height: 70px;
+
+  border-bottom: 1px solid #fff;
+
+  justify-content: space-between;
+
+}
+
+.logo>h1 {
+  margin: 12px;
 }
 
 .main-nav {
-   list-style: none;
-   display: flex;
-   text-align: center;
-   padding:  0;
-   margin: 0;
+  list-style: none;
+  display: flex;
+  text-align: center;
+  padding: 0;
+  margin: 0;
 
-   
+
 }
 
 .user-nav {
-   display: flex;
+  display: flex;
 
 }
 
-.main-nav > li {
-   margin: 0 10px;
+.main-nav>li {
+  margin: 0 10px;
 
 }
 
 
 .avatar {
-   height: 40px;
-   margin-top: 10px;
-   margin-right: 12px;
+  height: 40px;
+  margin-top: 10px;
+  margin-right: 12px;
 }
 
 .movies {
-   display: flex;
-   width: 99%;
+  display: flex;
+  width: 99%;
 }
-   
- .search {
-   width: 300px;
-   vertical-align: middle;
-   white-space: nowrap;
-   position: relative;
- }
 
- .search input {
-   width: 180px;
+.search {
+  width: 300px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
+
+.search input {
+  width: 180px;
   height: 40px;
   background: #2b303b;
   border: none;
@@ -86,86 +85,91 @@ a {
   -moz-border-radius: 5px;
   border-radius: 5px;
   margin-top: 9px;
- }
+}
 
- .search .icon{
-   position:absolute;
-   top: 3px;
-   margin-left: 15px;
-   margin-top: 17px;
-   z-index: 1;
-   color: #4f5b66;
- }
+.search .icon {
+  position: absolute;
+  top: 3px;
+  margin-left: 15px;
+  margin-top: 17px;
+  z-index: 1;
+  color: #4f5b66;
+}
 
- #moviesContainer {
-   display: flex;
-   justify-content: center; /* Центрирование карточек */
-   flex-wrap: wrap; /* Перенос строк для карточек */
-   margin-top: 20px; /* Отступ сверху */
- }
-
- #collectionContainer {
+#moviesContainer {
   display: flex;
-  justify-content: left; /* Центрирование карточек */
-  flex-wrap: wrap; /* Перенос строк для карточек */
-  margin-top: 20px; /* Отступ сверху */
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+#collectionContainer {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  margin-top: 20px;
   flex-direction: column;
 }
 
-.collection h2, .collection p {
+.collection h2,
+.collection p {
   margin-left: 20px;
 }
 
 .collection {
-  display: block; /* Элементы коллекции будут отображаться на новой строке */
-  margin-bottom: 20px; /* Добавить немного пространства между коллекциями */
-  width: 90%; /* Задать ширину коллекции, например, 90% от ширины родителя */
-  /* Другие стили, если необходимо */
+  display: block;
+  margin-bottom: 20px;
+  width: 90%;
 }
 
 
- .movie-card {
-   padding: 10px;
-   margin: 10px;
-   width: 200px;
-   display: inline-block;
-   vertical-align: top;
-   transition: transform 0.3s ease;
- }
- 
- .movie-image {
-   width: 100%;
-   height: auto;
-   border-radius: 10px;
-   
- }
+.movie-card {
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+  display: inline-block;
+  vertical-align: top;
+  transition: transform 0.3s ease;
+}
 
- .movie-card:hover {
-   transform: scale(1.1);
- }
- 
- .movie-title {
-   font-size: 16px;
-   font-weight: bold;
- }
- 
+.movie-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
 
- 
- #loadingIndicator {
-   text-align: center;
-   padding: 20px;
- }
+}
+
+.movie-card:hover {
+  transform: scale(1.1);
+}
+
+.movie-title {
+  font-size: 16px;
+  font-weight: bold;
+}
 
 
- .filter-container {
+
+#loadingIndicator {
+  text-align: center;
+  padding: 20px;
+}
+
+
+.filter-container {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
   margin-top: 20px;
-  color: white; /* Цвет текста, соответствующий сайту */
+  color: white;
 }
 
-.genre-selector, .country-selector, #resetFiltersButton, #applyFiltersButton,  #yearRangeInput, #yearRangeSlider{
+.genre-selector,
+.country-selector,
+#resetFiltersButton,
+#applyFiltersButton,
+#yearRangeInput,
+#yearRangeSlider {
   margin-right: 15px;
 }
 
@@ -173,71 +177,68 @@ a {
 select {
   padding: 8px 12px;
   border-radius: 5px;
-  border: 1px solid #fff; /* Белая граница */
-  background-color: #100e19; /* Фон, соответствующий сайту */
-  color: white; /* Цвет текста */
-  font-family: ivi Sans Regular, Arial, Helvetica, sans-serif; /* Шрифт сайта */
+  border: 1px solid #fff;
+  background-color: #100e19;
+  color: white;
+  font-family: ivi Sans Regular, Arial, Helvetica, sans-serif;
 }
 
-/* Стили для опций в выпадающем списке */
 select option {
-  background-color: #100e19; /* Фон, соответствующий сайту */
-  color: white; /* Цвет текста */
+  background-color: #100e19;
+  color: white;
 }
 
 #resetFiltersButton {
   padding: 8px 12px;
-  background-color: #100e19; /* Пример цвета кнопки */
+  background-color: #100e19;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid #fff; /* Белая граница */
-  /* Дополнительные стили, если нужно */
+  border: 1px solid #fff;
 }
 
 #applyFiltersButton {
   padding: 8px 12px;
-  background-color: #100e19; /* Пример цвета кнопки */
+  background-color: #100e19;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid #fff; /* Белая граница */
-  /* Дополнительные стили, если нужно */
+  border: 1px solid #fff;
 }
 
 #applyFiltersButton:hover {
-  background-color: #1adb44; /* Цвет при наведении */
+  background-color: #1adb44;
 }
 
 #resetFiltersButton:hover {
-  background-color: #db1a1a; /* Цвет при наведении */
+  background-color: #db1a1a;
 }
 
 
 #yearRangeInput {
   padding: 8px 12px;
   border-radius: 5px;
-  border: 1px solid #fff; /* Белая граница */
-  background-color: #100e19; /* Фон, соответствующий сайту */
-  color: white; /* Цвет текста */
-  font-family: ivi Sans Regular, Arial, Helvetica, sans-serif; /* Шрифт сайта */
-  cursor: pointer; /* Курсор при наведении на поле *
+  border: 1px solid #fff;
+  background-color: #100e19;
+  color: white;
+  font-family: ivi Sans Regular, Arial, Helvetica, sans-serif;
+  cursor: pointer;
 }
 
 #yearRangeInput:focus {
-  outline: none; /* Убрать контур при фокусе */
+  outline: none;
 }
 
-/* Стили для выпадающего блока с диапазоном годов */
+
 #yearRangeSlider {
-  width: 200px; /* Ширина ползунка */
-  background-color: #2b303b; /* Фоновый цвет */
+  width: 200px;
+  background-color: #2b303b;
   padding: 8px 12px;
   border-radius: 5px;
-  display: none; /* Ползунок скрыт по умолчанию */
-  box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.5); /* Тень */
+  display: none;
+  box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.5);
 }
 
 #yearRangeSlider input {
@@ -263,7 +264,7 @@ select option {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1; /* Отображается выше контента */
+  z-index: 1;
 }
 
 .modal-content {
@@ -275,12 +276,10 @@ select option {
 
 
 
-/* Скрыть прокрутку фона, когда модальное окно открыто */
 body.modal-open {
   overflow: hidden;
 }
 
-/* Стили для модального окна */
 .modal {
   display: none;
   position: fixed;
@@ -292,48 +291,44 @@ body.modal-open {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 2;
-  
+
 }
 
-/* Заголовок модального окна */
 .modal h2 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #fff; /* Цвет текста заголовка */
+  color: #fff;
 }
 
-/* Закрыть кнопку */
+
 .close {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 24px;
-  color: #fff; /* Цвет крестика */
+  color: #fff;
   cursor: pointer;
 }
 
-/* Стили для формы */
 .modal form {
   display: flex;
   flex-direction: column;
 }
 
-/* Стили для полей ввода */
 .modal input[type="text"],
 .modal input[type="password"] {
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc; /* Цвет границы полей ввода */
+  border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
   outline: none;
 }
 
-/* Стили для кнопок */
 .modal button {
   padding: 10px 20px;
-  background-color: #007bff; /* Цвет фона кнопок */
-  color: #fff; /* Цвет текста кнопок */
+  background-color: #007bff;
+  color: #fff;
   border: none;
   border-radius: 5px;
   font-size: 18px;
@@ -353,11 +348,11 @@ body.modal-open {
   z-index: 1;
   bottom: 100%;
   left: 50%;
-  margin-left: -100px; /* Половина ширины элемента */
+  margin-left: -100px;
   font-size: 12px;
 }
 
-/* Стили для отображения подсказки */
+
 .show-tooltip {
   visibility: visible;
 }
@@ -365,8 +360,8 @@ body.modal-open {
 
 .add-collection-btn {
   padding: 10px 20px;
-  background-color: #4CAF50; /* Цвет фона кнопки */
-  color: white; /* Цвет текста */
+  background-color: #4CAF50;
+  color: white;
   border: none;
   border-radius: 5px;
   font-size: 16px;
@@ -376,7 +371,7 @@ body.modal-open {
 }
 
 .add-collection-btn:hover {
-  background-color: #13b63b; /* Цвет при наведении */
+  background-color: #13b63b;
 }
 
 .modal-content textarea {
@@ -387,7 +382,7 @@ body.modal-open {
   border-radius: 5px;
   font-size: 14px;
   outline: none;
-  resize: vertical; /* Позволяет пользователю изменять размер текстового поля */
+  resize: vertical;
 }
 
 .delete-collection-btn {
@@ -397,7 +392,7 @@ body.modal-open {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  float: right; /* Для размещения кнопки справа */
+  float: right;
   margin-left: 10px;
 }
 
@@ -408,7 +403,7 @@ body.modal-open {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  float: right; /* Для размещения кнопки справа */
+  float: right;
 }
 
 
@@ -419,25 +414,18 @@ body.modal-open {
 
 .delete-movie-btn {
   padding: 10px 15px;
-  background-color: #db1a1a; /* Красный цвет фона для кнопки удаления */
-  color: white; /* Белый цвет текста */
+  background-color: #db1a1a;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 12px; /* Меньший размер шрифта */
+  font-size: 12px;
   margin-top: 5px;
-  margin-left: 10px ; /* Отступ сверху */
-  display: block; /* Занимает всю ширину родителя */
+  margin-left: 10px;
+  display: block;
 }
 
 .delete-movie-btn:hover {
-  background-color: #a81010; /* Темно-красный цвет фона при наведении */
-  transform: none; /* Отмена увеличения размера */
+  background-color: #a81010;
+  transform: none;
 }
-
-
-
- 
-   
-  
-
